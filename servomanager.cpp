@@ -47,6 +47,11 @@ Command::ResponceFromServo ServoManager::processServoCommand(Command::CommandToS
     return commandDispatcher[commandName](command);
 }
 
+void ServoManager::setAngleF(int idx, float angle)
+{
+      driver.ServoMoveTimeWrite(idx,degree2raw(angle),100);
+}
+
 Command::ResponceFromServo ServoManager::getAngle(Command::CommandToServo &command)
 {
     Command::ResponceFromServo ret;
