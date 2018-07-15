@@ -8,18 +8,14 @@
 #ifndef SERVER_H_
 #define SERVER_H_
 
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/shared_ptr.hpp>
 #include <thread>
 #include <memory>
-#include <boost/asio.hpp>
 
 
 
 namespace spider {
 
-class Server : private boost::noncopyable
+class Server
 {
 public:
 	Server();
@@ -29,10 +25,10 @@ public:
     static std::string commandsProtocol1(std::string&);
 private:
 
-	void serverTrhread();
-    void mosquittoThread();
+    void zeromqTrhread();
+//    void mosquittoThread();
     std::shared_ptr<std::thread> server_thread_;
-    std::shared_ptr<std::thread> mosquitto_thread_;
+//    std::shared_ptr<std::thread> mosquitto_thread_;
 
 };
 

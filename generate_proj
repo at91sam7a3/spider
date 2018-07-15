@@ -1,4 +1,12 @@
 cd build
+#upload 3rd party library
 ./conan_run
-cmake -G "Unix Makefiles" -D CMAKE_C_COMPILER=~/raspberrypi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc -D CMAKE_CXX_COMPILER=~/raspberrypi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-g++ ..
+cd ..
+#generate protobuf sources
+protoc --cpp_out=proto command.proto
+cd build
+#generate make files
+cmake -G "Unix Makefiles" -D CMAKE_C_COMPILER=~/raspberrypi/tools/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-gcc -D CMAKE_CXX_COMPILER=~/raspberrypi/tools/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-g++ ..
+#build
+make
 cd ..

@@ -6,17 +6,18 @@
  */
 #include <exception>
 #include "Server.h"
+#include <zmq.hpp>
+#include "proto/command.pb.h"
+#include "servomanager.h"
 
-#include <boost/lexical_cast.hpp>
-#include <boost/algorithm/string.hpp>
-
-
-#include <mosquittopp.h>
+//#include <mosquittopp.h>
 
 //#include "drivers/mpu6050simple.h"
 
-using namespace boost::asio;
-using boost::asio::ip::tcp;
+#define COMMAND_TO_SERVO 1
+
+
+
 namespace spider {
 
 
@@ -33,19 +34,52 @@ Server::~Server() {
 
 void Server::startServer() {
 
-    mosquitto_thread_.reset(new std::thread(&Server::mosquittoThread,this));
+    //    mosquitto_thread_.reset(new std::thread(&Server::mosquittoThread,this));
 }
 
 std::string Server::commandsProtocol1(std::string &line )
 {
-      std::stringstream ss;
+    return (std::string());
+}
 
-    std::cout<<"WRITING "<<ss.str();
-    return (ss.str());
+void Server::zeromqTrhread()
+{
+    zmq::context_t context (1);
+    zmq::socket_t socket (context, ZMQ_REP);
+    socket.bind ("tcp://*:5555");
+    while (true) {
+        zmq::message_t request;
+
+        //  Wait for next request from client
+        socket.recv (&request);
+        std::cout << "Received command" << std::endl;
+
+        char commandType = *((char*)(request.data()));
+        switch(commandType)
+        {
+        case COMMAND_TO_SERVO:
+        {
+            Command::CommandToServo  toServo;
+            toServo.ParseFromArray((char*)(request.data())+1,request.size()-1);
+            Command::ResponceFromServo fromServo = ServoManager::processServoCommand(toServo);
+            fromServo.set_name(toServo.name());
+            fromServo.set_servoid(toServo.servoid());
+            std::string replyString(fromServo.SerializeAsString());
+            //  Send reply back to client
+            zmq::message_t reply (replyString.length());
+            memcpy (reply.data (), replyString.c_str(), replyString.length());
+            socket.send (reply);
+        }
+            break;
+        default:
+            return;
+            break;
+        }
+    }
 }
 
 
-
+/*
 class MqttWrapper;
 static MqttWrapper * mqttHdl = nullptr;
 
@@ -147,7 +181,7 @@ void Server::mosquittoThread()
     std::cout<<"mqtt thread ended"<<std::endl;
 }
 
-
+*/
 } /* namespace spider */
 
 

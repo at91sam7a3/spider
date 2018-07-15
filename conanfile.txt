@@ -1,2 +1,10 @@
 [generators]
 cmake
+
+[requires]
+zmq/4.2.2@bincrafters/stable
+cppzmq/4.2.2@bincrafters/stable
+protobuf/3.5.1@bincrafters/stable
+
+[imports]
+#bin , *proto* -> ./bin # Copies all dll files from packages bin folder to my "bin" folder

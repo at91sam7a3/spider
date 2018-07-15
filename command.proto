@@ -1,0 +1,25 @@
+syntax = "proto2";
+package Command;
+
+message CommandToServo {
+  required string name = 1;
+  required uint32 servoId = 2;
+  optional int32 param1 = 3;
+  optional int32 param2 = 4;
+  optional int32 param3 = 5;
+  optional int32 param4 = 6;
+}
+
+message ResponceFromServo {
+  required string name = 1;
+  required uint32 servoId = 2;
+  required int32 result = 3;
+}
+
+message MoveCommand {
+  required string name = 1;
+  required uint32 param1 = 2;
+  optional uint32 paramX = 3;
+  optional uint32 paramY = 4;
+  optional uint32 paramZ = 5;
+}

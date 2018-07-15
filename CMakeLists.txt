@@ -4,9 +4,11 @@ cmake_minimum_required(VERSION 2.8)
 SET(CMAKE_SYSTEM_NAME Linux)
 SET(CMAKE_SYSTEM_VERSION 1)
 
-SET(CMAKE_C_COMPILER $ENV{HOME}/raspberrypi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc)
-SET(CMAKE_CXX_COMPILER $ENV{HOME}/raspberrypi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-g++)
+SET(CMAKE_C_COMPILER $ENV{HOME}/raspberrypi/tools/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-gcc)
+SET(CMAKE_CXX_COMPILER $ENV{HOME}/raspberrypi/tools/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-g++)
 
+#SET(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
+#SET(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
 
 # Where is the target environment
 SET(CMAKE_FIND_ROOT_PATH $ENV{HOME}/raspberrypi/rootfs)
@@ -23,7 +25,7 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/usr/include)
-INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/usr/local/include)
+#INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/usr/local/include)
 
 link_directories($ENV{HOME}/raspberrypi/rootfs/usr/lib/arm-linux-gnueabihf)
 link_directories($ENV{HOME}/raspberrypi/rootfs/usr/local/lib)
@@ -36,7 +38,8 @@ INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/opt/vc/include/interface/vmcs_
 
 
 aux_source_directory(. SRC_LIST)
-#aux_source_directory(./body SRC_LIST)
+aux_source_directory(./proto SRC_LIST)
+aux_source_directory(./hardware/lx16lib LX16_SRC_LIST)
 #aux_source_directory(./drivers DRV_SRC_LIST)
 set(CMAKE_CXX_FLAGS "-std=c++11  -L/home/oleksii/raspberrypi/rootfs/lib/arm-linux-gnueabihf -L/home/oleksii/raspberrypi/rootfs/usr/lib/arm-linux-gnueabihf -L/home/oleksii/raspberrypi/rootfs/lib -L/home/oleksii/raspberrypi/rootfs/usr/lib -L/home/oleksii/raspberrypi/rootfs/usr/local/lib" )
 
@@ -48,4 +51,5 @@ conan_basic_setup()
 
 
 add_executable(robot ${SRC_LIST}  ${DRV_SRC_LIST})
-target_link_libraries(robot ${CONAN_LIBS}  mosquittopp pthread opencv_core opencv_highgui raspicam boost_system boost_serialization opencv_imgproc wiringPi boost_filesystem raspicam_cv  aruco)
+add_library(lx16 ${LX16_SRC_LIST})
+target_link_libraries(robot lx16 ${CONAN_LIBS}  wiringPi)

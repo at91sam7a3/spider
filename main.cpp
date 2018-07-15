@@ -1,5 +1,6 @@
 #include "Server.h"
 #include <iostream>
+#include <unistd.h>
 //#include "Gyroscope.h"
 
 using namespace std;

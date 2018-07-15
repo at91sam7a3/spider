@@ -1,2 +1,1 @@
-# spider
-robot spider
+# spider2
