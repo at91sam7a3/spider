@@ -4,17 +4,19 @@
 #include <functional>
 
 static lx16driver driver("/dev/ttyUSB0", true);
+//360=757
 
-//TODO set correct formula!
 static int raw2degree(int in)
 {
-    return in;
+    float out=static_cast<float>(in)/757*180;
+    return static_cast<int>(out);
 }
 
 //TODO set correct formula!
 static int degree2raw(int in)
 {
-    return in;
+    float out=static_cast<float>(in)/180*757;
+    return static_cast<int>(out);
 }
 
 ServoManager::ServoManager()
