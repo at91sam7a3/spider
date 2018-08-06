@@ -9,12 +9,12 @@
 #include <zmq.hpp>
 #include "proto/command.pb.h"
 #include "servomanager.h"
-
+#include "Communication.h"
 //#include <mosquittopp.h>
 
 //#include "drivers/mpu6050simple.h"
 
-#define COMMAND_TO_SERVO 1
+
 
 
 
