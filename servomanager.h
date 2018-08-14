@@ -14,6 +14,7 @@ private:
     static Command::ResponceFromServo getAngle(Command::CommandToServo& command);
     static Command::ResponceFromServo setAngle(Command::CommandToServo& command);
     static Command::ResponceFromServo getVoltage(Command::CommandToServo& command);
+    static Command::ResponceFromServo getTemperature(Command::CommandToServo& command);
 };
 
 #endif // SERVOMANAGER_H

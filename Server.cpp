@@ -10,6 +10,7 @@
 #include "proto/command.pb.h"
 #include "servomanager.h"
 #include "Communication.h"
+#include "MoveCommands.h"
 //#include <mosquittopp.h>
 
 //#include "drivers/mpu6050simple.h"
@@ -35,12 +36,10 @@ Server::~Server() {
 void Server::startServer() {
 
     //    mosquitto_thread_.reset(new std::thread(&Server::mosquittoThread,this));
+    server_thread_.reset(new std::thread(&Server::zeromqTrhread,this));
 }
 
-std::string Server::commandsProtocol1(std::string &line )
-{
-    return (std::string());
-}
+
 
 void Server::zeromqTrhread()
 {
@@ -54,16 +53,17 @@ void Server::zeromqTrhread()
         socket.recv (&request);
         std::cout << "Received command" << std::endl;
 
-        char commandType = *((char*)(request.data()));
+        char commandType = *(static_cast<char*>(request.data()));
         switch(commandType)
         {
         case COMMAND_TO_SERVO:
         {
+            std::cout << "COMMAND_TO_SERVO" << std::endl;
+
             Command::CommandToServo  toServo;
-            toServo.ParseFromArray((char*)(request.data())+1,request.size()-1);
+            toServo.ParseFromArray(static_cast<char*>(request.data())+1,request.size()-1);
+            std::cout << toServo.name().c_str()<<std::endl;
             Command::ResponceFromServo fromServo = ServoManager::processServoCommand(toServo);
-            fromServo.set_name(toServo.name());
-            fromServo.set_servoid(toServo.servoid());
             std::string replyString(fromServo.SerializeAsString());
             //  Send reply back to client
             zmq::message_t reply (replyString.length());
@@ -71,8 +71,19 @@ void Server::zeromqTrhread()
             socket.send (reply);
         }
             break;
+        case MOVE_COMMAND:
+        {
+            Command::MoveCommand  mc;
+            mc.ParseFromArray(static_cast<char*>(request.data())+1,request.size()-1);
+            MoveCommands::GetInstance()->DoAction(mc.command(), mc.steps());
+            zmq::message_t reply (1);
+            char rep=EMPTY_ANSWER;
+            memcpy (reply.data (), &rep, 1);
+            socket.send (reply);
+        }
+            break;
         default:
-            return;
+
             break;
         }
     }

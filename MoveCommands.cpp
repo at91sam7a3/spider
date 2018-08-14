@@ -10,7 +10,7 @@
 
 namespace spider {
 
-MoveCommands* MoveCommands::m_singlton = 0;
+MoveCommands* MoveCommands::m_singlton = nullptr;
 
 MoveCommands* MoveCommands::GetInstance()
 {
@@ -19,7 +19,7 @@ MoveCommands* MoveCommands::GetInstance()
     return m_singlton;
 }
 
-void MoveCommands::MoveForward(float distance)
+void MoveCommands::MoveForward(int distance)
 {
 
     std::cout<<"Preparing to move"<<std::endl;
@@ -37,7 +37,7 @@ void MoveCommands::MoveForward(float distance)
 
 
 
-void MoveCommands::Rotate(float angle)
+void MoveCommands::Rotate(int angle)
 {
 
     std::cout<<"Preparing to Rotate"<<std::endl;
@@ -59,13 +59,13 @@ void MoveCommands::Halt()
 
 
 
-void MoveCommands::SetLegPos(int legIdx, float xpos, float ypos, float zpos)
+void MoveCommands::SetLegPos(unsigned int legIdx, float xpos, float ypos, float zpos)
 {
     LegCoodinates lc(xpos,ypos,zpos);
     Hull::GetInstance()->legs_[legIdx].SetLegCoord(lc);
 }
 
-LegCoodinates MoveCommands::GetLegPos(int legIdx)
+LegCoodinates MoveCommands::GetLegPos(unsigned int legIdx)
 {
     return Hull::GetInstance()->legs_[legIdx].GetLegCoord();
 }
@@ -80,6 +80,26 @@ void MoveCommands::StandUp(int height_)
 
     }
 
+}
+
+void MoveCommands::DoAction(std::string command, int count)
+{
+    if(command=="StepForward"){
+        MoveForward(count);
+        return;
+    }
+    if(command=="StepBack"){
+        MoveForward(-count);
+        return;
+    }
+    if(command=="TurnLeft"){
+        Rotate(count);
+        return;
+    }
+    if(command=="TurnRight"){
+        Rotate(-count);
+        return;
+    }
 }
 
 void MoveCommands::SitDown()

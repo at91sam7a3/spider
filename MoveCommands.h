@@ -29,11 +29,11 @@ public:
 
     /// @brief move forward
     /// @param distance [in] Distance in mm. if value  is negative then move back
-    void MoveForward(float distance);
+    void MoveForward(int distance);
 
     /// @brief rotate
     /// @param angle[in] - angle for rotation. positive angle for clockwise
-    void Rotate(float angle);
+    void Rotate(int angle);
 
     /// @brief immediate stop current movement
     /// and switch to Steady position
@@ -42,11 +42,11 @@ public:
     /// @brief sit down
     void SitDown();
 
-    void SetLegPos(int legIdx, float xpos, float ypos, float zpos);
-    LegCoodinates GetLegPos(int legIdx);
+    void SetLegPos(unsigned int legIdx, float xpos, float ypos, float zpos);
+    LegCoodinates GetLegPos(unsigned int legIdx);
 
     void StandUp(int height);
-
+    void DoAction(std::string command, int count);
 private:
     MoveCommands();
     static MoveCommands* m_singlton;

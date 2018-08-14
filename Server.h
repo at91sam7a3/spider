@@ -22,7 +22,6 @@ public:
 	~Server();
 public:
 	void startServer();
-    static std::string commandsProtocol1(std::string&);
 private:
 
     void zeromqTrhread();
