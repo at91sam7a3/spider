@@ -2,6 +2,8 @@
 #include <iostream>
 #include <map>
 #include <functional>
+#include <thread>
+#include <chrono>
 
 static lx16driver driver("/dev/ttyAMA0", true);
 //360=757
@@ -58,7 +60,7 @@ void ServoManager::setAngleF(int idx, float angle)
 Command::ResponceFromServo ServoManager::getAngle(Command::CommandToServo &command)
 {
     Command::ResponceFromServo ret;
-    int rawValue = driver.ServoAdjustAngleGet(command.servoid());
+    int rawValue = driver.ServoPostionRead(command.servoid());
     ret.set_result(raw2degree(rawValue));
     return ret;
 }
@@ -68,7 +70,8 @@ Command::ResponceFromServo ServoManager::setAngle(Command::CommandToServo &comma
     Command::ResponceFromServo ret;
     ret.set_result(0);
     driver.ServoMoveTimeWrite(command.servoid(),degree2raw(command.param1()),100);
-    std::cout<<"Reading angle? "<<driver.ServoAdjustAngleGet(command.servoid())<<std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::cout<<"Reading angle? "<<driver.ServoPostionRead(command.servoid())<<std::endl;
     return ret;
 }
 
