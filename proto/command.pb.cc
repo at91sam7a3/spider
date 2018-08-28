@@ -134,13 +134,15 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::MoveCommand, command_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::MoveCommand, steps_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::MoveCommand, parameter_),
   0,
   1,
+  2,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 11, sizeof(::Command::CommandToServo)},
   { 17, 23, sizeof(::Command::ResponceFromServo)},
-  { 24, 31, sizeof(::Command::MoveCommand)},
+  { 24, 32, sizeof(::Command::MoveCommand)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -175,11 +177,11 @@ void AddDescriptorsImpl() {
       "vo\022\014\n\004name\030\001 \002(\t\022\017\n\007servoId\030\002 \002(\r\022\016\n\006par"
       "am1\030\003 \001(\005\022\016\n\006param2\030\004 \001(\005\022\016\n\006param3\030\005 \001("
       "\005\022\016\n\006param4\030\006 \001(\005\"#\n\021ResponceFromServo\022\016"
-      "\n\006result\030\001 \002(\005\"-\n\013MoveCommand\022\017\n\007command"
-      "\030\001 \002(\t\022\r\n\005steps\030\002 \001(\005"
+      "\n\006result\030\001 \002(\005\"@\n\013MoveCommand\022\017\n\007command"
+      "\030\001 \002(\t\022\r\n\005steps\030\002 \001(\005\022\021\n\tparameter\030\003 \001(\005"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 221);
+      descriptor, 240);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "command.proto", &protobuf_RegisterTypes);
 }
@@ -930,6 +932,7 @@ void MoveCommand::InitAsDefaultInstance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MoveCommand::kCommandFieldNumber;
 const int MoveCommand::kStepsFieldNumber;
+const int MoveCommand::kParameterFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MoveCommand::MoveCommand()
@@ -950,14 +953,18 @@ MoveCommand::MoveCommand(const MoveCommand& from)
   if (from.has_command()) {
     command_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.command_);
   }
-  steps_ = from.steps_;
+  ::memcpy(&steps_, &from.steps_,
+    static_cast<size_t>(reinterpret_cast<char*>(&parameter_) -
+    reinterpret_cast<char*>(&steps_)) + sizeof(parameter_));
   // @@protoc_insertion_point(copy_constructor:Command.MoveCommand)
 }
 
 void MoveCommand::SharedCtor() {
   _cached_size_ = 0;
   command_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  steps_ = 0;
+  ::memset(&steps_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&parameter_) -
+      reinterpret_cast<char*>(&steps_)) + sizeof(parameter_));
 }
 
 MoveCommand::~MoveCommand() {
@@ -1003,7 +1010,11 @@ void MoveCommand::Clear() {
     GOOGLE_DCHECK(!command_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
     (*command_.UnsafeRawStringPointer())->clear();
   }
-  steps_ = 0;
+  if (cached_has_bits & 6u) {
+    ::memset(&steps_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&parameter_) -
+        reinterpret_cast<char*>(&steps_)) + sizeof(parameter_));
+  }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -1042,6 +1053,20 @@ bool MoveCommand::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &steps_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 parameter = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+          set_has_parameter();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &parameter_)));
         } else {
           goto handle_unusual;
         }
@@ -1090,6 +1115,11 @@ void MoveCommand::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->steps(), output);
   }
 
+  // optional int32 parameter = 3;
+  if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->parameter(), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
@@ -1121,6 +1151,11 @@ void MoveCommand::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->steps(), target);
   }
 
+  // optional int32 parameter = 3;
+  if (cached_has_bits & 0x00000004u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->parameter(), target);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
@@ -1144,13 +1179,22 @@ size_t MoveCommand::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->command());
   }
-  // optional int32 steps = 2;
-  if (has_steps()) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->steps());
-  }
+  if (_has_bits_[0 / 32] & 6u) {
+    // optional int32 steps = 2;
+    if (has_steps()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->steps());
+    }
 
+    // optional int32 parameter = 3;
+    if (has_parameter()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->parameter());
+    }
+
+  }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -1181,13 +1225,16 @@ void MoveCommand::MergeFrom(const MoveCommand& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 3u) {
+  if (cached_has_bits & 7u) {
     if (cached_has_bits & 0x00000001u) {
       set_has_command();
       command_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.command_);
     }
     if (cached_has_bits & 0x00000002u) {
       steps_ = from.steps_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      parameter_ = from.parameter_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -1220,6 +1267,7 @@ void MoveCommand::InternalSwap(MoveCommand* other) {
   using std::swap;
   command_.Swap(&other->command_);
   swap(steps_, other->steps_);
+  swap(parameter_, other->parameter_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);

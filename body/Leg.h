@@ -72,6 +72,7 @@ private:
     //setted servos numbers
     std::vector<int> indexes_;
     int legIndex_;
+    float angleCOffsetAccordingToLegAttachment_;
 };
 }
 #endif // LEG_H

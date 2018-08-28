@@ -461,18 +461,28 @@ class MoveCommand : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::int32 steps() const;
   void set_steps(::google::protobuf::int32 value);
 
+  // optional int32 parameter = 3;
+  bool has_parameter() const;
+  void clear_parameter();
+  static const int kParameterFieldNumber = 3;
+  ::google::protobuf::int32 parameter() const;
+  void set_parameter(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:Command.MoveCommand)
  private:
   void set_has_command();
   void clear_has_command();
   void set_has_steps();
   void clear_has_steps();
+  void set_has_parameter();
+  void clear_has_parameter();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable int _cached_size_;
   ::google::protobuf::internal::ArenaStringPtr command_;
   ::google::protobuf::int32 steps_;
+  ::google::protobuf::int32 parameter_;
   friend struct ::protobuf_command_2eproto::TableStruct;
   friend void ::protobuf_command_2eproto::InitDefaultsMoveCommandImpl();
 };
@@ -787,6 +797,30 @@ inline void MoveCommand::set_steps(::google::protobuf::int32 value) {
   set_has_steps();
   steps_ = value;
   // @@protoc_insertion_point(field_set:Command.MoveCommand.steps)
+}
+
+// optional int32 parameter = 3;
+inline bool MoveCommand::has_parameter() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void MoveCommand::set_has_parameter() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void MoveCommand::clear_has_parameter() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void MoveCommand::clear_parameter() {
+  parameter_ = 0;
+  clear_has_parameter();
+}
+inline ::google::protobuf::int32 MoveCommand::parameter() const {
+  // @@protoc_insertion_point(field_get:Command.MoveCommand.parameter)
+  return parameter_;
+}
+inline void MoveCommand::set_parameter(::google::protobuf::int32 value) {
+  set_has_parameter();
+  parameter_ = value;
+  // @@protoc_insertion_point(field_set:Command.MoveCommand.parameter)
 }
 
 #ifdef __GNUC__

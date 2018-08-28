@@ -3,7 +3,7 @@
 
 namespace spider {
 
-Head* Head::m_singlton = 0;
+Head* Head::m_singlton = nullptr;
 
 
 

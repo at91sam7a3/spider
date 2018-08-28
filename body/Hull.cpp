@@ -2,7 +2,7 @@
 
 namespace spider {
 
- Hull * Hull::m_singlton = 0;
+ Hull * Hull::m_singlton = nullptr;
 
 Hull::Hull()
 {
@@ -23,7 +23,7 @@ Hull *Hull::GetInstance()
 
 void Hull::SetBodyHeight(float height)
 {
-    for (int i=0; i<6;++i)
+    for (size_t i=0; i<6;++i)
     {
         legs_[i].bodyHeight_=height;
         legs_[i].RecalcAngles();

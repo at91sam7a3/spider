@@ -47,6 +47,7 @@ public:
 
     void StandUp(int height);
     void DoAction(std::string command, int count);
+    void DoAction2(std::string command, int parameter);
 private:
     MoveCommands();
     static MoveCommands* m_singlton;

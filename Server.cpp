@@ -37,6 +37,7 @@ void Server::startServer() {
 
     //    mosquitto_thread_.reset(new std::thread(&Server::mosquittoThread,this));
     server_thread_.reset(new std::thread(&Server::zeromqTrhread,this));
+    MoveCommands::GetInstance()->Halt();
 }
 
 
@@ -61,7 +62,7 @@ void Server::zeromqTrhread()
             std::cout << "COMMAND_TO_SERVO" << std::endl;
 
             Command::CommandToServo  toServo;
-            toServo.ParseFromArray(static_cast<char*>(request.data())+1,request.size()-1);
+            toServo.ParseFromArray(static_cast<char*>(request.data())+1,static_cast<int>(request.size()-1));
             std::cout << toServo.name().c_str()<<std::endl;
             Command::ResponceFromServo fromServo = ServoManager::processServoCommand(toServo);
             std::string replyString(fromServo.SerializeAsString());
@@ -74,8 +75,13 @@ void Server::zeromqTrhread()
         case MOVE_COMMAND:
         {
             Command::MoveCommand  mc;
-            mc.ParseFromArray(static_cast<char*>(request.data())+1,request.size()-1);
-            MoveCommands::GetInstance()->DoAction(mc.command(), mc.steps());
+            mc.ParseFromArray(static_cast<char*>(request.data())+1,static_cast<int>(request.size()-1));
+            if(mc.has_steps())
+                MoveCommands::GetInstance()->DoAction(mc.command(), mc.steps());
+
+            if(mc.has_parameter())
+                MoveCommands::GetInstance()->DoAction2(mc.command(), mc.parameter());
+
             zmq::message_t reply (1);
             char rep=EMPTY_ANSWER;
             memcpy (reply.data (), &rep, 1);
