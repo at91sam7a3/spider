@@ -161,9 +161,28 @@ int lx16driver::ServoVoltageRead(int id)
 
     handle.Write(buf,6);
     handle.FlushReceiver();
-    if(m_loopbackFix)//next line fix echo
+    if(m_loopbackFix)
+    {//next line fix echo
+        std::cout<<std::endl<<"processing loopback fix"<<std::endl;
         handle.ReadString(buf,0,6,100);
-    for(int i=0;i<16;++i) buf[i]=-5;
+
+        // Read a string from the serial device
+        ret=handle.ReadString(buf,'\n',16,100);
+
+        if((buf[0]!=LOBOT_SERVO_FRAME_HEADER) || (buf[1]!=LOBOT_SERVO_FRAME_HEADER)){
+             std::cout<<std::endl<<"found anomaly, trying to avoid"<<std::endl;
+            for(size_t i=1;i<5;++i)
+            {
+                if((buf[i]==LOBOT_SERVO_FRAME_HEADER) && (buf[i+1]==LOBOT_SERVO_FRAME_HEADER))
+                {
+                    memcpy(&buf[0],&buf[i],16-i);
+                    std::cout<<std::endl<<"avoided"<<std::endl;
+                    break;
+                }
+            }
+        }
+    }
+
     // Read a string from the serial device
     ret=handle.ReadString(buf,'\n',16,100);                                // Read a maximum of 128 characters with a timeout of 5 seconds
     char crc = LobotCheckSum(buf);                                                                        // The final character of the string must be a line feed ('\n')

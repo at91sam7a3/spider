@@ -7,18 +7,18 @@
 
 namespace spider {
 
-static const float cLegPart=28;
-static const float bLegPart=60;
-static const float aLegPart=130;
+static const float cLegPart=52;
+static const float bLegPart=81;
+static const float aLegPart=122;
 
-static const float centerYOffset=65;  //65
-static const float rearYOffset=45;  //45
-static const float rearXOffset=35;
+static const float centerYOffset=0;  //65
+static const float rearYOffset=0;  //45
+static const float rearXOffset=0;
 
 Leg::Leg()
     :xPos_(0)
     ,yPos_(10)
-    ,bodyHeight_(80)
+    ,bodyHeight_(120)
     ,distanceFromGround_(0)
 {
 
@@ -55,7 +55,7 @@ void Leg::RecalcAngles()
     angleA_ = angleA_ *180 / 3.1415;
     angleB_ = angleB_ *180 /3.1415;
     angleC_ = angleC_ *180 /3.1415;
-    ServoManager::setAngleF(indexes_[0],angleA_);
+    ServoManager::setAngleF(indexes_[0],180-angleA_);
     ServoManager::setAngleF(indexes_[1],angleB_);
     ServoManager::setAngleF(indexes_[2],angleC_);
     //std::cout<<"angles<< A "<<angleA_<<" B "<<angleB_<<" C "<<angleC_<<std::endl;

@@ -76,7 +76,7 @@ void MoveCommands::StandUp(int height_)
     {
         Hull::GetInstance()->SetBodyHeight(height);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(150)); //50
 
     }
 
@@ -119,7 +119,7 @@ MoveCommands::MoveCommands()
     stepSize=64;
     stepWidth=30;
     stepSize2=64;
-    stepHeight=60;
+    stepHeight=10;
 
     rotateRadius=120;
     stepAngleSize=15;
@@ -356,7 +356,7 @@ void MoveCommands::PlayAnimation(Actions action, int count)
                 Hull::GetInstance()->legs_[j].SetLegCoord(lc);
 
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(40));
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
 
     }
@@ -376,7 +376,7 @@ void MoveCommands::PlayAnimationReverse(Actions action, int count)
                 Hull::GetInstance()->legs_[j].SetLegCoord(lc);
 
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
     }
 }
