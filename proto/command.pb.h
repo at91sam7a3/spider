@@ -36,7 +36,7 @@ namespace protobuf_command_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[3];
+  static const ::google::protobuf::internal::ParseTable schema[4];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -48,16 +48,22 @@ void InitDefaultsResponceFromServoImpl();
 void InitDefaultsResponceFromServo();
 void InitDefaultsMoveCommandImpl();
 void InitDefaultsMoveCommand();
+void InitDefaultsLegMoveCommandImpl();
+void InitDefaultsLegMoveCommand();
 inline void InitDefaults() {
   InitDefaultsCommandToServo();
   InitDefaultsResponceFromServo();
   InitDefaultsMoveCommand();
+  InitDefaultsLegMoveCommand();
 }
 }  // namespace protobuf_command_2eproto
 namespace Command {
 class CommandToServo;
 class CommandToServoDefaultTypeInternal;
 extern CommandToServoDefaultTypeInternal _CommandToServo_default_instance_;
+class LegMoveCommand;
+class LegMoveCommandDefaultTypeInternal;
+extern LegMoveCommandDefaultTypeInternal _LegMoveCommand_default_instance_;
 class MoveCommand;
 class MoveCommandDefaultTypeInternal;
 extern MoveCommandDefaultTypeInternal _MoveCommand_default_instance_;
@@ -486,6 +492,149 @@ class MoveCommand : public ::google::protobuf::Message /* @@protoc_insertion_poi
   friend struct ::protobuf_command_2eproto::TableStruct;
   friend void ::protobuf_command_2eproto::InitDefaultsMoveCommandImpl();
 };
+// -------------------------------------------------------------------
+
+class LegMoveCommand : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Command.LegMoveCommand) */ {
+ public:
+  LegMoveCommand();
+  virtual ~LegMoveCommand();
+
+  LegMoveCommand(const LegMoveCommand& from);
+
+  inline LegMoveCommand& operator=(const LegMoveCommand& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  LegMoveCommand(LegMoveCommand&& from) noexcept
+    : LegMoveCommand() {
+    *this = ::std::move(from);
+  }
+
+  inline LegMoveCommand& operator=(LegMoveCommand&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const LegMoveCommand& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const LegMoveCommand* internal_default_instance() {
+    return reinterpret_cast<const LegMoveCommand*>(
+               &_LegMoveCommand_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    3;
+
+  void Swap(LegMoveCommand* other);
+  friend void swap(LegMoveCommand& a, LegMoveCommand& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline LegMoveCommand* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  LegMoveCommand* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const LegMoveCommand& from);
+  void MergeFrom(const LegMoveCommand& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(LegMoveCommand* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 leg = 1;
+  bool has_leg() const;
+  void clear_leg();
+  static const int kLegFieldNumber = 1;
+  ::google::protobuf::uint32 leg() const;
+  void set_leg(::google::protobuf::uint32 value);
+
+  // required int32 x = 2;
+  bool has_x() const;
+  void clear_x();
+  static const int kXFieldNumber = 2;
+  ::google::protobuf::int32 x() const;
+  void set_x(::google::protobuf::int32 value);
+
+  // required int32 y = 3;
+  bool has_y() const;
+  void clear_y();
+  static const int kYFieldNumber = 3;
+  ::google::protobuf::int32 y() const;
+  void set_y(::google::protobuf::int32 value);
+
+  // required int32 z = 4;
+  bool has_z() const;
+  void clear_z();
+  static const int kZFieldNumber = 4;
+  ::google::protobuf::int32 z() const;
+  void set_z(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:Command.LegMoveCommand)
+ private:
+  void set_has_leg();
+  void clear_has_leg();
+  void set_has_x();
+  void clear_has_x();
+  void set_has_y();
+  void clear_has_y();
+  void set_has_z();
+  void clear_has_z();
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 leg_;
+  ::google::protobuf::int32 x_;
+  ::google::protobuf::int32 y_;
+  ::google::protobuf::int32 z_;
+  friend struct ::protobuf_command_2eproto::TableStruct;
+  friend void ::protobuf_command_2eproto::InitDefaultsLegMoveCommandImpl();
+};
 // ===================================================================
 
 
@@ -823,9 +972,111 @@ inline void MoveCommand::set_parameter(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:Command.MoveCommand.parameter)
 }
 
+// -------------------------------------------------------------------
+
+// LegMoveCommand
+
+// required uint32 leg = 1;
+inline bool LegMoveCommand::has_leg() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void LegMoveCommand::set_has_leg() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void LegMoveCommand::clear_has_leg() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void LegMoveCommand::clear_leg() {
+  leg_ = 0u;
+  clear_has_leg();
+}
+inline ::google::protobuf::uint32 LegMoveCommand::leg() const {
+  // @@protoc_insertion_point(field_get:Command.LegMoveCommand.leg)
+  return leg_;
+}
+inline void LegMoveCommand::set_leg(::google::protobuf::uint32 value) {
+  set_has_leg();
+  leg_ = value;
+  // @@protoc_insertion_point(field_set:Command.LegMoveCommand.leg)
+}
+
+// required int32 x = 2;
+inline bool LegMoveCommand::has_x() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void LegMoveCommand::set_has_x() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void LegMoveCommand::clear_has_x() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void LegMoveCommand::clear_x() {
+  x_ = 0;
+  clear_has_x();
+}
+inline ::google::protobuf::int32 LegMoveCommand::x() const {
+  // @@protoc_insertion_point(field_get:Command.LegMoveCommand.x)
+  return x_;
+}
+inline void LegMoveCommand::set_x(::google::protobuf::int32 value) {
+  set_has_x();
+  x_ = value;
+  // @@protoc_insertion_point(field_set:Command.LegMoveCommand.x)
+}
+
+// required int32 y = 3;
+inline bool LegMoveCommand::has_y() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void LegMoveCommand::set_has_y() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void LegMoveCommand::clear_has_y() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void LegMoveCommand::clear_y() {
+  y_ = 0;
+  clear_has_y();
+}
+inline ::google::protobuf::int32 LegMoveCommand::y() const {
+  // @@protoc_insertion_point(field_get:Command.LegMoveCommand.y)
+  return y_;
+}
+inline void LegMoveCommand::set_y(::google::protobuf::int32 value) {
+  set_has_y();
+  y_ = value;
+  // @@protoc_insertion_point(field_set:Command.LegMoveCommand.y)
+}
+
+// required int32 z = 4;
+inline bool LegMoveCommand::has_z() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void LegMoveCommand::set_has_z() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void LegMoveCommand::clear_has_z() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void LegMoveCommand::clear_z() {
+  z_ = 0;
+  clear_has_z();
+}
+inline ::google::protobuf::int32 LegMoveCommand::z() const {
+  // @@protoc_insertion_point(field_get:Command.LegMoveCommand.z)
+  return z_;
+}
+inline void LegMoveCommand::set_z(::google::protobuf::int32 value) {
+  set_has_z();
+  z_ = value;
+  // @@protoc_insertion_point(field_set:Command.LegMoveCommand.z)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -6,12 +6,12 @@
 
 
 namespace spider {
-
+//leg parts sizes
 static const float cLegPart=52;
 static const float bLegPart=81;
 static const float aLegPart=124;
-
-static const float centerYOffset=0;  //65
+// phisical coordinates where legs attached on body
+static const float centerYOffset=65;  //65
 static const float rearYOffset=45;
 static const float rearXOffset=45;
 
@@ -35,6 +35,8 @@ void Leg::SetLegIndex(int idx)
     if((idx==0) ||(idx==5)) { xPos_=40; yPos_=10;}
     if((idx==2) ||(idx==3)) { xPos_=-40;yPos_=10;}
     if(idx==0) angleCOffsetAccordingToLegAttachment_ = -60;
+    if(idx==1) angleCOffsetAccordingToLegAttachment_ = -90;
+    if(idx==2) angleCOffsetAccordingToLegAttachment_ = -120;
 
 }
 

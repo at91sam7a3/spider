@@ -3,7 +3,7 @@ cd build
 ./conan_run
 cd ..
 #generate protobuf sources
-protoc --cpp_out=proto command.proto
+build/bin/protoc --cpp_out=proto command.proto
 cd build
 #generate make files
 cmake -G "Unix Makefiles" -D CMAKE_C_COMPILER=~/raspberrypi/tools/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-gcc -D CMAKE_CXX_COMPILER=~/raspberrypi/tools/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-g++ ..

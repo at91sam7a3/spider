@@ -88,6 +88,21 @@ void Server::zeromqTrhread()
             socket.send (reply);
         }
             break;
+        case LEG_MOVEMENT:
+        {
+            Command::LegMoveCommand lmc;
+            lmc.ParseFromArray(static_cast<char*>(request.data())+1,static_cast<int>(request.size()-1));
+            LegCoodinates lc;
+            lc.height=lmc.z();
+            lc.x = lmc.x();
+            lc.y = lmc.y();
+            Hull::GetInstance()->legs_[lmc.leg()].SetLegCoord(lc);
+//reply empty answer
+            zmq::message_t reply (1);
+            char rep=EMPTY_ANSWER;
+            memcpy (reply.data (), &rep, 1);
+            socket.send (reply);
+        }
         default:
 
             break;
