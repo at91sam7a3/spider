@@ -136,11 +136,11 @@ void MoveCommands::SitDown()
 MoveCommands::MoveCommands()
 {
     stepSize=128;
-    stepWidth=50;
+    stepWidth=100;
     stepSize2=128;
-    stepHeight=20;
+    stepHeight=40;
 
-    rotateRadius=120;
+    rotateRadius=220;
     stepAngleSize=15;
     stepAngleSize2=15;
 
@@ -166,22 +166,22 @@ void MoveCommands::PrepareToMove(Actions action, bool direct)
 
 
 
-    for(int i=0;i<6;++i)
+    for(size_t i=0;i<6;++i)
     {
         // move leg up
         LegCoodinates lc =  Hull::GetInstance()->legs_[i].GetLegCoord();
         lc.height = stepHeight;
         Hull::GetInstance()->legs_[i].SetLegCoord(lc);
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         // then move leg to current position
         lc = *(anim->frames[i].begin());
         lc.height = stepHeight;
         Hull::GetInstance()->legs_[i].SetLegCoord(lc);
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         // move leg down
         lc.height = 0;
         Hull::GetInstance()->legs_[i].SetLegCoord(lc);
-        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 }
 

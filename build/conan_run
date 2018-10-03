@@ -9,4 +9,5 @@ conan install \
     -s compiler.libcxx="libstdc++11" \
     -s os="Linux" \
     -s compiler.version=6 \
-    -pr=rpi
+    -pr=rpi \
+    -r spider_repo

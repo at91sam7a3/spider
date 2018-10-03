@@ -54,6 +54,7 @@ Command::ResponceFromServo ServoManager::processServoCommand(Command::CommandToS
 
 void ServoManager::setAngleF(int idx, float angle)
 {
+    if (idx>8) angle = 180.0f - angle;
     driver.ServoMoveTimeWrite(idx,degree2raw(angle),100);
 }
 

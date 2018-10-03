@@ -11,14 +11,14 @@ static const float cLegPart=52;
 static const float bLegPart=81;
 static const float aLegPart=124;
 // phisical coordinates where legs attached on body
-static const float centerYOffset=65;  //65
-static const float rearYOffset=45;
-static const float rearXOffset=45;
+static const float centerYOffset=93.5;  //65
+static const float rearYOffset=57.5;
+static const float rearXOffset=99;
 
 Leg::Leg()
     :bodyHeight_(120)
     ,xPos_(0)
-    ,yPos_(10)
+    ,yPos_(0)
     ,distanceFromGround_(0)
 {
 
@@ -32,17 +32,20 @@ void Leg::SetLegIndex(int idx)
     indexes_.push_back(idx*3+2);
 
     angleCOffsetAccordingToLegAttachment_ = 0;
-    if((idx==0) ||(idx==5)) { xPos_=40; yPos_=10;}
-    if((idx==2) ||(idx==3)) { xPos_=-40;yPos_=10;}
+   // if((idx==0) ||(idx==5)) { xPos_=10; yPos_=10;}
+   // if((idx==2) ||(idx==3)) { xPos_=-10;yPos_=10;}
     if(idx==0) angleCOffsetAccordingToLegAttachment_ = -60;
     if(idx==1) angleCOffsetAccordingToLegAttachment_ = -90;
     if(idx==2) angleCOffsetAccordingToLegAttachment_ = -120;
+    if(idx==3) angleCOffsetAccordingToLegAttachment_ = -120;
+    if(idx==4) angleCOffsetAccordingToLegAttachment_ = -90;
+    if(idx==5) angleCOffsetAccordingToLegAttachment_ = -60;
 
 }
 
 void Leg::RecalcAngles()
 {
-    if(yPos_==0) yPos_=0.01;
+    if(yPos_==0) yPos_=0.01f;
     // angle Gamma (angleC_)
     angleC_ = atan(xPos_/yPos_);
     float L1 = sqrt( xPos_ * xPos_ + yPos_ * yPos_ );
@@ -57,13 +60,13 @@ void Leg::RecalcAngles()
 
     //set angles directly to servos
 
-    angleA_ = angleA_ *180 / 3.1415;
-    angleB_ = angleB_ *180 /3.1415;
-    angleC_ = angleC_ *180 /3.1415;
-    ServoManager::setAngleF(indexes_[0],180-angleA_);
-    ServoManager::setAngleF(indexes_[1],angleB_);
+    angleA_ = angleA_ *180 / 3.1415f;
+    angleB_ = angleB_ *180 /3.1415f;
+    angleC_ = angleC_ *180 /3.1415f;
+    ServoManager::setAngleF(indexes_[0], angleA_);
+    ServoManager::setAngleF(indexes_[1],180 -angleB_);
     ServoManager::setAngleF(indexes_[2],angleC_-angleCOffsetAccordingToLegAttachment_);
-    //std::cout<<"angles<< A "<<angleA_<<" B "<<angleB_<<" C "<<angleC_<<std::endl;
+    std::cout<<"LEG "<<legIndex_<<" angles<< A "<<angleA_<<" B "<<angleB_<<" C "<<angleC_<<std::endl;
 }
 
 void Leg::SetXY(float x, float y) //TODO
@@ -135,8 +138,6 @@ LegCoodinates Leg::GlobalToLocal(LegCoodinates &lc)
 
     default:
         break;
-
-        res.x= res.x-20;
     }
     return res;
 }
@@ -147,27 +148,21 @@ float Leg::GetLegDirectionInGlobalCoordinates()
     {
     case RightMiddle:
         return -90;
-        break;
 
     case LeftMiddle:
         return 90;
-        break;
 
     case RightFront:
-        return -30;
-        break;
+        return -60;
 
     case RightBack:
-        return -150;
-        break;
+        return -120;
 
     case LeftFront:
-        return 30;
-        break;
+        return 60;
 
     case LeftBack:
-        return 150;
-        break;
+        return 120;
 
     default:
 
