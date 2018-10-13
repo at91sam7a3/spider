@@ -82,6 +82,21 @@ void MoveCommands::StandUp(int height_)
 
 }
 
+void MoveCommands::Sleep()
+{
+    for(int i=0;i<6;++i)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        Hull::GetInstance()->legs_[i].SetMotorAngle(0,180);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        Hull::GetInstance()->legs_[i].SetMotorAngle(1,0);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
+        Hull::GetInstance()->legs_[i].SetMotorAngle(2,0);
+    }
+}
+
 void MoveCommands::DoAction(std::string command, int count)
 {
     if(command=="StepForward"){
@@ -341,19 +356,19 @@ void MoveCommands::ApplyOffsetsToWalkAnimations()
             if((i==1) || (i==4)){
                 for(int j=0;j<m_animations[animationIdx].frames[i].size();j++)
                 {
-                    m_animations[animationIdx].frames[i][j].y+=30;
+                    m_animations[animationIdx].frames[i][j].y+=40;
                 }
             }
             if((i==0) || (i==5)){
                 for(int j=0;j<m_animations[animationIdx].frames[i].size();j++)
                 {
-                    m_animations[animationIdx].frames[i][j].x+=40;
+                    m_animations[animationIdx].frames[i][j].x+=80;
                 }
             }
             if((i==2) || (i==3)){
                 for(int j=0;j<m_animations[animationIdx].frames[i].size();j++)
                 {
-                    m_animations[animationIdx].frames[i][j].x-=40;
+                    m_animations[animationIdx].frames[i][j].x-=80;
                 }
             }
         }

@@ -46,6 +46,7 @@ public:
     LegCoodinates GetLegPos(unsigned int legIdx);
 
     void StandUp(int height);
+    void Sleep();
     void DoAction(std::string command, int count);
     void DoAction2(std::string command, int parameter);
 private:

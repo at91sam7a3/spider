@@ -60,6 +60,7 @@ public:
     float GetLegDirectionInGlobalCoordinates();
     float bodyHeight_;
 
+    void SetMotorAngle(int idx,int angle);
 private:
     float xPos_;
     float yPos_;

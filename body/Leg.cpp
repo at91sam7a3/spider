@@ -32,14 +32,22 @@ void Leg::SetLegIndex(int idx)
     indexes_.push_back(idx*3+2);
 
     angleCOffsetAccordingToLegAttachment_ = 0;
-   // if((idx==0) ||(idx==5)) { xPos_=10; yPos_=10;}
-   // if((idx==2) ||(idx==3)) { xPos_=-10;yPos_=10;}
-    if(idx==0) angleCOffsetAccordingToLegAttachment_ = -60;
+    // if((idx==0) ||(idx==5)) { xPos_=10; yPos_=10;}
+    // if((idx==2) ||(idx==3)) { xPos_=-10;yPos_=10;}
+/*    if(idx==0) angleCOffsetAccordingToLegAttachment_ = -60;
     if(idx==1) angleCOffsetAccordingToLegAttachment_ = -90;
     if(idx==2) angleCOffsetAccordingToLegAttachment_ = -120;
     if(idx==3) angleCOffsetAccordingToLegAttachment_ = -120;
     if(idx==4) angleCOffsetAccordingToLegAttachment_ = -90;
-    if(idx==5) angleCOffsetAccordingToLegAttachment_ = -60;
+    if(idx==5) angleCOffsetAccordingToLegAttachment_ = -60;  */
+
+
+        if(idx==0) angleCOffsetAccordingToLegAttachment_ = -30;
+        if(idx==1) angleCOffsetAccordingToLegAttachment_ = -90;
+        if(idx==2) angleCOffsetAccordingToLegAttachment_ = -150;
+        if(idx==3) angleCOffsetAccordingToLegAttachment_ = -150;
+        if(idx==4) angleCOffsetAccordingToLegAttachment_ = -90;
+        if(idx==5) angleCOffsetAccordingToLegAttachment_ = -30;
 
 }
 
@@ -166,6 +174,22 @@ float Leg::GetLegDirectionInGlobalCoordinates()
 
     default:
 
+        break;
+    }
+}
+
+void Leg::SetMotorAngle(int idx, int angle)
+{
+    switch(idx)
+    {
+    case 0:
+        ServoManager::setAngleF(indexes_[0], angle);
+        break;
+    case 1:
+        ServoManager::setAngleF(indexes_[1],180 -angle);
+        break;
+    case 2:
+        ServoManager::setAngleF(indexes_[2],angle-angleCOffsetAccordingToLegAttachment_);
         break;
     }
 }

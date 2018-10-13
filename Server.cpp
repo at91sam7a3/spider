@@ -37,7 +37,7 @@ void Server::startServer() {
 
     //    mosquitto_thread_.reset(new std::thread(&Server::mosquittoThread,this));
     server_thread_.reset(new std::thread(&Server::zeromqTrhread,this));
-    MoveCommands::GetInstance()->Halt();
+    MoveCommands::GetInstance()->Sleep();
 }
 
 
