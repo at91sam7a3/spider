@@ -25,7 +25,7 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/usr/include)
-#INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/usr/local/include)
+INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/usr/local/include)
 
 link_directories($ENV{HOME}/raspberrypi/rootfs/usr/lib/arm-linux-gnueabihf)
 link_directories($ENV{HOME}/raspberrypi/rootfs/usr/local/lib)
@@ -40,6 +40,7 @@ INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/opt/vc/include/interface/vmcs_
 aux_source_directory(. SRC_LIST)
 aux_source_directory(./proto SRC_LIST)
 aux_source_directory(./body SRC_LIST)
+aux_source_directory(./vision SRC_LIST)
 
 aux_source_directory(./hardware/lx16lib LX16_SRC_LIST)
 #aux_source_directory(./drivers DRV_SRC_LIST)

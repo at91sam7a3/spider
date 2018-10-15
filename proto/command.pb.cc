@@ -40,6 +40,11 @@ class LegMoveCommandDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<LegMoveCommand>
       _instance;
 } _LegMoveCommand_default_instance_;
+class CommandToCameraDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<CommandToCamera>
+      _instance;
+} _CommandToCamera_default_instance_;
 }  // namespace Command
 namespace protobuf_command_2eproto {
 void InitDefaultsCommandToServoImpl() {
@@ -126,7 +131,28 @@ void InitDefaultsLegMoveCommand() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsLegMoveCommandImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[4];
+void InitDefaultsCommandToCameraImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::Command::_CommandToCamera_default_instance_;
+    new (ptr) ::Command::CommandToCamera();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Command::CommandToCamera::InitAsDefaultInstance();
+}
+
+void InitDefaultsCommandToCamera() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsCommandToCameraImpl);
+}
+
+::google::protobuf::Metadata file_level_metadata[5];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::CommandToServo, _has_bits_),
@@ -177,12 +203,22 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   1,
   2,
   3,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::CommandToCamera, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::CommandToCamera, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::CommandToCamera, command_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::CommandToCamera, param_),
+  0,
+  1,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 11, sizeof(::Command::CommandToServo)},
   { 17, 23, sizeof(::Command::ResponceFromServo)},
   { 24, 32, sizeof(::Command::MoveCommand)},
   { 35, 44, sizeof(::Command::LegMoveCommand)},
+  { 48, 55, sizeof(::Command::CommandToCamera)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -190,6 +226,7 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::Command::_ResponceFromServo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::Command::_MoveCommand_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::Command::_LegMoveCommand_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::Command::_CommandToCamera_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -208,7 +245,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 4);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 5);
 }
 
 void AddDescriptorsImpl() {
@@ -221,10 +258,11 @@ void AddDescriptorsImpl() {
       "\n\006result\030\001 \002(\005\"@\n\013MoveCommand\022\017\n\007command"
       "\030\001 \002(\t\022\r\n\005steps\030\002 \001(\005\022\021\n\tparameter\030\003 \001(\005"
       "\">\n\016LegMoveCommand\022\013\n\003leg\030\001 \002(\r\022\t\n\001x\030\002 \002"
-      "(\005\022\t\n\001y\030\003 \002(\005\022\t\n\001z\030\004 \002(\005"
+      "(\005\022\t\n\001y\030\003 \002(\005\022\t\n\001z\030\004 \002(\005\"1\n\017CommandToCam"
+      "era\022\017\n\007command\030\001 \002(\t\022\r\n\005param\030\002 \001(\005"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 304);
+      descriptor, 355);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "command.proto", &protobuf_RegisterTypes);
 }
@@ -1712,6 +1750,314 @@ void LegMoveCommand::InternalSwap(LegMoveCommand* other) {
 }
 
 ::google::protobuf::Metadata LegMoveCommand::GetMetadata() const {
+  protobuf_command_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_command_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void CommandToCamera::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CommandToCamera::kCommandFieldNumber;
+const int CommandToCamera::kParamFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CommandToCamera::CommandToCamera()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_command_2eproto::InitDefaultsCommandToCamera();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Command.CommandToCamera)
+}
+CommandToCamera::CommandToCamera(const CommandToCamera& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  command_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_command()) {
+    command_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.command_);
+  }
+  param_ = from.param_;
+  // @@protoc_insertion_point(copy_constructor:Command.CommandToCamera)
+}
+
+void CommandToCamera::SharedCtor() {
+  _cached_size_ = 0;
+  command_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  param_ = 0;
+}
+
+CommandToCamera::~CommandToCamera() {
+  // @@protoc_insertion_point(destructor:Command.CommandToCamera)
+  SharedDtor();
+}
+
+void CommandToCamera::SharedDtor() {
+  command_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void CommandToCamera::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CommandToCamera::descriptor() {
+  ::protobuf_command_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_command_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const CommandToCamera& CommandToCamera::default_instance() {
+  ::protobuf_command_2eproto::InitDefaultsCommandToCamera();
+  return *internal_default_instance();
+}
+
+CommandToCamera* CommandToCamera::New(::google::protobuf::Arena* arena) const {
+  CommandToCamera* n = new CommandToCamera;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CommandToCamera::Clear() {
+// @@protoc_insertion_point(message_clear_start:Command.CommandToCamera)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    GOOGLE_DCHECK(!command_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
+    (*command_.UnsafeRawStringPointer())->clear();
+  }
+  param_ = 0;
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool CommandToCamera::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Command.CommandToCamera)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string command = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_command()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->command().data(), static_cast<int>(this->command().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "Command.CommandToCamera.command");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 param = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+          set_has_param();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &param_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Command.CommandToCamera)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Command.CommandToCamera)
+  return false;
+#undef DO_
+}
+
+void CommandToCamera::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Command.CommandToCamera)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string command = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->command().data(), static_cast<int>(this->command().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "Command.CommandToCamera.command");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->command(), output);
+  }
+
+  // optional int32 param = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->param(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Command.CommandToCamera)
+}
+
+::google::protobuf::uint8* CommandToCamera::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:Command.CommandToCamera)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string command = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->command().data(), static_cast<int>(this->command().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "Command.CommandToCamera.command");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->command(), target);
+  }
+
+  // optional int32 param = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->param(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Command.CommandToCamera)
+  return target;
+}
+
+size_t CommandToCamera::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Command.CommandToCamera)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  // required string command = 1;
+  if (has_command()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->command());
+  }
+  // optional int32 param = 2;
+  if (has_param()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->param());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CommandToCamera::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Command.CommandToCamera)
+  GOOGLE_DCHECK_NE(&from, this);
+  const CommandToCamera* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CommandToCamera>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Command.CommandToCamera)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Command.CommandToCamera)
+    MergeFrom(*source);
+  }
+}
+
+void CommandToCamera::MergeFrom(const CommandToCamera& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Command.CommandToCamera)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 3u) {
+    if (cached_has_bits & 0x00000001u) {
+      set_has_command();
+      command_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.command_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      param_ = from.param_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void CommandToCamera::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Command.CommandToCamera)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CommandToCamera::CopyFrom(const CommandToCamera& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Command.CommandToCamera)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool CommandToCamera::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  return true;
+}
+
+void CommandToCamera::Swap(CommandToCamera* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CommandToCamera::InternalSwap(CommandToCamera* other) {
+  using std::swap;
+  command_.Swap(&other->command_);
+  swap(param_, other->param_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CommandToCamera::GetMetadata() const {
   protobuf_command_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_command_2eproto::file_level_metadata[kIndexInFileMessages];
 }

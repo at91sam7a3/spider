@@ -11,6 +11,7 @@
 #include "servomanager.h"
 #include "Communication.h"
 #include "MoveCommands.h"
+#include "vision/visionmanager.h"
 //#include <mosquittopp.h>
 
 //#include "drivers/mpu6050simple.h"
@@ -36,13 +37,46 @@ Server::~Server() {
 void Server::startServer() {
 
     //    mosquitto_thread_.reset(new std::thread(&Server::mosquittoThread,this));
-    server_thread_.reset(new std::thread(&Server::zeromqTrhread,this));
+    orders_thread_.reset(new std::thread(&Server::ordersThread,this));
+    settings_thread_.reset(new std::thread(&Server::settingThread,this));
     MoveCommands::GetInstance()->Sleep();
 }
 
 
+void Server::settingThread()
+{
+    zmq::context_t context (1);
+    zmq::socket_t socket (context, ZMQ_REP);
+    socket.bind ("tcp://*:5556");
+    while (true) {
+        zmq::message_t rcv_message;
 
-void Server::zeromqTrhread()
+        //  Wait for next request from client
+        socket.recv (&rcv_message);
+        std::cout << "Received settings command" << std::endl;
+        char commandType = *(static_cast<char*>(rcv_message.data()));
+        switch(commandType)
+        {
+        case COMMAND_TO_CAMERA:
+        {
+            std::cout << "COMMAND_TO_SERVO" << std::endl;
+
+            Command::CommandToCamera  toCamera;
+            toCamera.ParseFromArray(static_cast<char*>(rcv_message.data())+1,static_cast<int>(rcv_message.size()-1));
+            std::cout << toCamera.command().c_str()<<std::endl;
+            visionManager_.processCommand(toCamera);
+
+        }
+            break;
+        }
+        zmq::message_t reply (1);
+        char rep=EMPTY_ANSWER;
+        memcpy (reply.data (), &rep, 1);
+        socket.send (reply);
+    }
+}
+
+void Server::ordersThread()
 {
     zmq::context_t context (1);
     zmq::socket_t socket (context, ZMQ_REP);
@@ -97,7 +131,7 @@ void Server::zeromqTrhread()
             lc.x = lmc.x();
             lc.y = lmc.y();
             Hull::GetInstance()->legs_[lmc.leg()].SetLegCoord(lc);
-//reply empty answer
+            //reply empty answer
             zmq::message_t reply (1);
             char rep=EMPTY_ANSWER;
             memcpy (reply.data (), &rep, 1);

@@ -36,7 +36,7 @@ namespace protobuf_command_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[4];
+  static const ::google::protobuf::internal::ParseTable schema[5];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -50,14 +50,20 @@ void InitDefaultsMoveCommandImpl();
 void InitDefaultsMoveCommand();
 void InitDefaultsLegMoveCommandImpl();
 void InitDefaultsLegMoveCommand();
+void InitDefaultsCommandToCameraImpl();
+void InitDefaultsCommandToCamera();
 inline void InitDefaults() {
   InitDefaultsCommandToServo();
   InitDefaultsResponceFromServo();
   InitDefaultsMoveCommand();
   InitDefaultsLegMoveCommand();
+  InitDefaultsCommandToCamera();
 }
 }  // namespace protobuf_command_2eproto
 namespace Command {
+class CommandToCamera;
+class CommandToCameraDefaultTypeInternal;
+extern CommandToCameraDefaultTypeInternal _CommandToCamera_default_instance_;
 class CommandToServo;
 class CommandToServoDefaultTypeInternal;
 extern CommandToServoDefaultTypeInternal _CommandToServo_default_instance_;
@@ -635,6 +641,134 @@ class LegMoveCommand : public ::google::protobuf::Message /* @@protoc_insertion_
   friend struct ::protobuf_command_2eproto::TableStruct;
   friend void ::protobuf_command_2eproto::InitDefaultsLegMoveCommandImpl();
 };
+// -------------------------------------------------------------------
+
+class CommandToCamera : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Command.CommandToCamera) */ {
+ public:
+  CommandToCamera();
+  virtual ~CommandToCamera();
+
+  CommandToCamera(const CommandToCamera& from);
+
+  inline CommandToCamera& operator=(const CommandToCamera& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  CommandToCamera(CommandToCamera&& from) noexcept
+    : CommandToCamera() {
+    *this = ::std::move(from);
+  }
+
+  inline CommandToCamera& operator=(CommandToCamera&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CommandToCamera& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CommandToCamera* internal_default_instance() {
+    return reinterpret_cast<const CommandToCamera*>(
+               &_CommandToCamera_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    4;
+
+  void Swap(CommandToCamera* other);
+  friend void swap(CommandToCamera& a, CommandToCamera& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CommandToCamera* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  CommandToCamera* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const CommandToCamera& from);
+  void MergeFrom(const CommandToCamera& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(CommandToCamera* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string command = 1;
+  bool has_command() const;
+  void clear_command();
+  static const int kCommandFieldNumber = 1;
+  const ::std::string& command() const;
+  void set_command(const ::std::string& value);
+  #if LANG_CXX11
+  void set_command(::std::string&& value);
+  #endif
+  void set_command(const char* value);
+  void set_command(const char* value, size_t size);
+  ::std::string* mutable_command();
+  ::std::string* release_command();
+  void set_allocated_command(::std::string* command);
+
+  // optional int32 param = 2;
+  bool has_param() const;
+  void clear_param();
+  static const int kParamFieldNumber = 2;
+  ::google::protobuf::int32 param() const;
+  void set_param(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:Command.CommandToCamera)
+ private:
+  void set_has_command();
+  void clear_has_command();
+  void set_has_param();
+  void clear_has_param();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable int _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr command_;
+  ::google::protobuf::int32 param_;
+  friend struct ::protobuf_command_2eproto::TableStruct;
+  friend void ::protobuf_command_2eproto::InitDefaultsCommandToCameraImpl();
+};
 // ===================================================================
 
 
@@ -1072,9 +1206,102 @@ inline void LegMoveCommand::set_z(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:Command.LegMoveCommand.z)
 }
 
+// -------------------------------------------------------------------
+
+// CommandToCamera
+
+// required string command = 1;
+inline bool CommandToCamera::has_command() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void CommandToCamera::set_has_command() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void CommandToCamera::clear_has_command() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void CommandToCamera::clear_command() {
+  command_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_command();
+}
+inline const ::std::string& CommandToCamera::command() const {
+  // @@protoc_insertion_point(field_get:Command.CommandToCamera.command)
+  return command_.GetNoArena();
+}
+inline void CommandToCamera::set_command(const ::std::string& value) {
+  set_has_command();
+  command_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Command.CommandToCamera.command)
+}
+#if LANG_CXX11
+inline void CommandToCamera::set_command(::std::string&& value) {
+  set_has_command();
+  command_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Command.CommandToCamera.command)
+}
+#endif
+inline void CommandToCamera::set_command(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_command();
+  command_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Command.CommandToCamera.command)
+}
+inline void CommandToCamera::set_command(const char* value, size_t size) {
+  set_has_command();
+  command_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Command.CommandToCamera.command)
+}
+inline ::std::string* CommandToCamera::mutable_command() {
+  set_has_command();
+  // @@protoc_insertion_point(field_mutable:Command.CommandToCamera.command)
+  return command_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* CommandToCamera::release_command() {
+  // @@protoc_insertion_point(field_release:Command.CommandToCamera.command)
+  clear_has_command();
+  return command_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void CommandToCamera::set_allocated_command(::std::string* command) {
+  if (command != NULL) {
+    set_has_command();
+  } else {
+    clear_has_command();
+  }
+  command_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), command);
+  // @@protoc_insertion_point(field_set_allocated:Command.CommandToCamera.command)
+}
+
+// optional int32 param = 2;
+inline bool CommandToCamera::has_param() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void CommandToCamera::set_has_param() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void CommandToCamera::clear_has_param() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void CommandToCamera::clear_param() {
+  param_ = 0;
+  clear_has_param();
+}
+inline ::google::protobuf::int32 CommandToCamera::param() const {
+  // @@protoc_insertion_point(field_get:Command.CommandToCamera.param)
+  return param_;
+}
+inline void CommandToCamera::set_param(::google::protobuf::int32 value) {
+  set_has_param();
+  param_ = value;
+  // @@protoc_insertion_point(field_set:Command.CommandToCamera.param)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

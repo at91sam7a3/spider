@@ -26,3 +26,8 @@ message LegMoveCommand{
     required int32 y = 3;
     required int32 z = 4;
 }
+
+message CommandToCamera{
+    required string command = 1;
+    optional int32 param = 2;
+}
