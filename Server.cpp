@@ -4,19 +4,18 @@
  *  Created on: Jan 1, 2016
  *      Author: oleksii
  */
-#include <exception>
+
 #include "Server.h"
-#include <zmq.hpp>
+
 #include "proto/command.pb.h"
 #include "servomanager.h"
 #include "Communication.h"
 #include "MoveCommands.h"
-#include "vision/visionmanager.h"
 //#include <mosquittopp.h>
 
 //#include "drivers/mpu6050simple.h"
-
-
+#include <zmq.hpp>
+#include <exception>
 
 
 
@@ -39,14 +38,14 @@ void Server::startServer() {
     //    mosquitto_thread_.reset(new std::thread(&Server::mosquittoThread,this));
     orders_thread_.reset(new std::thread(&Server::ordersThread,this));
     settings_thread_.reset(new std::thread(&Server::settingThread,this));
-    MoveCommands::GetInstance()->Sleep();
+    //MoveCommands::GetInstance()->Sleep();
 }
 
 
 void Server::settingThread()
 {
     zmq::context_t context (1);
-    zmq::socket_t socket (context, ZMQ_REP);
+    zmq::socket_t socket (context, ZMQ_PAIR);
     socket.bind ("tcp://*:5556");
     while (true) {
         zmq::message_t rcv_message;
@@ -64,15 +63,12 @@ void Server::settingThread()
             Command::CommandToCamera  toCamera;
             toCamera.ParseFromArray(static_cast<char*>(rcv_message.data())+1,static_cast<int>(rcv_message.size()-1));
             std::cout << toCamera.command().c_str()<<std::endl;
-            visionManager_.processCommand(toCamera);
+            visionManager_.ProcessCommand(toCamera);
 
         }
             break;
         }
-        zmq::message_t reply (1);
-        char rep=EMPTY_ANSWER;
-        memcpy (reply.data (), &rep, 1);
-        socket.send (reply);
+
     }
 }
 

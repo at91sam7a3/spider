@@ -11,7 +11,7 @@
 #include <thread>
 #include <memory>
 
-class VisionManager;
+#include "vision/visionmanager.h"
 
 namespace spider {
 
@@ -24,8 +24,8 @@ public:
     void startServer();
 
 private:
-    void settingThread() noreturn;
-    void ordersThread() noreturn;
+    void settingThread();
+    void ordersThread();
 //    void mosquittoThread();
     std::shared_ptr<std::thread> orders_thread_;
     std::shared_ptr<std::thread> settings_thread_;

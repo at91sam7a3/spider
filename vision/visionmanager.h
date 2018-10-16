@@ -10,9 +10,9 @@ class VisionManager
 public:
     VisionManager();
     void ProcessCommand(Command::CommandToCamera&  toCamera);
-
-private:
     void StartCamera();
+private:
+
     void CameraThread();
     std::shared_ptr<std::thread> camera_thread_;
 
