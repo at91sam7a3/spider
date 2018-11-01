@@ -18,7 +18,7 @@ SET(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} --sysroot=${CMAKE_FI
 
 # Search for programs only in the build host directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-SET(CMAKE_EXE_LINKER_FLAGS "-Wl,-rpath-link=/home/oleksii/raspberrypi/rootfs/lib/arm-linux-gnueabihf:/home/oleksii/raspberrypi/rootfs/usr/lib/arm-linux-gnueabihf:/home/oleksii/raspberrypi/rootfs/lib:/home/oleksii/raspberrypi/rootfs/usr/lib")
+SET(CMAKE_EXE_LINKER_FLAGS "-Wl,-rpath-link=$ENV{HOME}/raspberrypi/rootfs/lib/arm-linux-gnueabihf:$ENV{HOME}/raspberrypi/rootfs/usr/lib/arm-linux-gnueabihf:$ENV{HOME}/raspberrypi/rootfs/lib:$ENV{HOME}/raspberrypi/rootfs/usr/lib")
 
 # Search for libraries and headers only in the target directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
@@ -44,9 +44,9 @@ aux_source_directory(./vision SRC_LIST)
 
 aux_source_directory(./hardware/lx16lib LX16_SRC_LIST)
 #aux_source_directory(./drivers DRV_SRC_LIST)
-set(CMAKE_CXX_FLAGS "-std=c++11  -L/home/oleksii/raspberrypi/rootfs/lib/arm-linux-gnueabihf -L/home/oleksii/raspberrypi/rootfs/usr/lib/arm-linux-gnueabihf -L/home/oleksii/raspberrypi/rootfs/lib -L/home/oleksii/raspberrypi/rootfs/usr/lib -L/home/oleksii/raspberrypi/rootfs/usr/local/lib" )
+set(CMAKE_CXX_FLAGS "-std=c++11  -L$ENV{HOME}/raspberrypi/rootfs/lib/arm-linux-gnueabihf -L$ENV{HOME}/raspberrypi/rootfs/usr/lib/arm-linux-gnueabihf -L$ENV{HOME}/raspberrypi/rootfs/lib -L$ENV{HOME}/raspberrypi/rootfs/usr/lib -L$ENV{HOME}/raspberrypi/rootfs/usr/local/lib" )
 
-SET(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -Wl,-rpath-link=/home/oleksii/raspberrypi/rootfs/lib/arm-linux-gnueabihf:/home/oleksii/raspberrypi/rootfs/usr/lib/arm-linux-gnueabihf:/home/oleksii/raspberrypi/rootfs/lib:/home/oleksii/raspberrypi/rootfs/usr/lib:/home/oleksii/raspberrypi/rootfs/opt/vc/lib")
+SET(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -Wl,-rpath-link=$ENV{HOME}/raspberrypi/rootfs/lib/arm-linux-gnueabihf:$ENV{HOME}/raspberrypi/rootfs/usr/lib/arm-linux-gnueabihf:$ENV{HOME}/raspberrypi/rootfs/lib:$ENV{HOME}/raspberrypi/rootfs/usr/lib:$ENV{HOME}/raspberrypi/rootfs/opt/vc/lib")
 
 
 include(build/conanbuildinfo.cmake)
