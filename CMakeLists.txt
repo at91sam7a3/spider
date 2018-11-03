@@ -55,7 +55,7 @@ conan_basic_setup()
 
 add_executable(robot ${SRC_LIST}  ${DRV_SRC_LIST})
 add_library(lx16 ${LX16_SRC_LIST})
-target_link_libraries(robot lx16 ${CONAN_LIBS}  wiringPi raspicam raspicam_cv opencv_core opencv_highgui opencv_imgproc)
+target_link_libraries(robot lx16 ${CONAN_LIBS}  wiringPi opencv_core opencv_highgui opencv_imgproc)
 
 add_custom_target(useful_files DEPENDS ALL
     SOURCES

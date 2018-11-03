@@ -2,7 +2,7 @@
 #define VISIONMANAGER_H
 
 #include "../proto/command.pb.h"
-#include <raspicam/raspicam_cv.h>
+#include <opencv2/opencv.hpp>
 #include <thread>
 
 class VisionManager
@@ -16,7 +16,7 @@ private:
     void CameraThread();
     std::shared_ptr<std::thread> camera_thread_;
 
-    raspicam::RaspiCam_Cv Camera;
+    cv::VideoCapture cap;
     cv::Mat image;
 };
 
