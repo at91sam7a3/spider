@@ -1,0 +1,10 @@
+Files here are different utils or configs, requred for running spider
+ on raspberry.
+ Here we have:
+
+video - setup raspberry camera for correct exposure for dark room
+
+rpi - conan config for raspberry
+
+sync - has to be placed in folder $HOME/raspberry and contain $HOME/rootfs
+folder. it will connect to raspberry and sync all libs and includes. 

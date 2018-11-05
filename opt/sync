@@ -1,0 +1,8 @@
+rsync -rzLR --safe-links \
+      pi@192.168.0.129:/usr/lib \
+      pi@192.168.0.129:/usr/include \
+      pi@192.168.0.129:/usr/local/lib \
+      pi@192.168.0.129:/usr/local/include \
+      pi@192.168.0.129:/opt/vc/include \
+      pi@192.168.0.129:/opt/vc/lib \
+      rootfs/
