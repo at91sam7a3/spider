@@ -36,6 +36,8 @@ INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/opt/vc/include)
 INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/opt/vc/include/interface/vcos/pthreads)
 INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/opt/vc/include/interface/vmcs_host/linux)
 
+INCLUDE_DIRECTORIES($ENV{HOME}/raspberrypi/rootfs/usr/local/include/opencv4)
+
 
 aux_source_directory(. SRC_LIST)
 aux_source_directory(./proto SRC_LIST)
@@ -55,7 +57,7 @@ conan_basic_setup()
 
 add_executable(robot ${SRC_LIST}  ${DRV_SRC_LIST})
 add_library(lx16 ${LX16_SRC_LIST})
-target_link_libraries(robot lx16 ${CONAN_LIBS}  wiringPi opencv_core opencv_highgui opencv_imgproc)
+target_link_libraries(robot lx16 ${CONAN_LIBS}  wiringPi  opencv_videoio opencv_core opencv_highgui opencv_imgproc opencv_imgcodecs opencv_aruco)
 
 add_custom_target(useful_files DEPENDS ALL
     SOURCES

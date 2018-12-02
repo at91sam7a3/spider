@@ -42,11 +42,13 @@ lx16driver::lx16driver(const char* device, bool loopFix)
     :operational(false)
     ,m_loopbackFix(loopFix)
 {
+    std::cout<<"Opening serial port "<<device<<" at 115200 "<<std::endl;
     int Ret = handle.Open(device,115200);
     if (Ret!=1) {
         std::cerr<<"ERROR: Comport not availabe!"<<std::endl;
         return;
     }
+    std::cout<<"seial port opened"<<std::endl;
     operational = true;
     handle.FlushReceiver();
 }

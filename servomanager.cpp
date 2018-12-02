@@ -4,8 +4,9 @@
 #include <functional>
 #include <thread>
 #include <chrono>
+#include <wiringPi.h>
 
-static lx16driver driver("/dev/ttyAMA0", true);
+static lx16driver driver("/dev/serial0", true);
 //360=757
 
 static int raw2degree(int in)
@@ -23,11 +24,15 @@ static int degree2raw(int in)
 
 ServoManager::ServoManager()
 {
+    wiringPiSetup ();
+    pinMode (7,OUTPUT);
+    std::cout <<"Servos power on"<<std::endl;
 
     if (driver.isOperational()==false)
     {
         std::cout<<"Something wrong with connection, do you have rights? is port correct? is device online?"<<std::endl;
     }
+
 }
 
 Command::ResponceFromServo ServoManager::processServoCommand(Command::CommandToServo& command)
@@ -56,6 +61,11 @@ void ServoManager::setAngleF(int idx, float angle)
 {
     if (idx>8) angle = 180.0f - angle;
     driver.ServoMoveTimeWrite(idx,degree2raw(angle),100);
+}
+
+void ServoManager::turnOnServoPower(bool on)
+{
+        digitalWrite (7,on);
 }
 
 Command::ResponceFromServo ServoManager::getAngle(Command::CommandToServo &command)

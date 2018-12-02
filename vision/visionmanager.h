@@ -4,6 +4,8 @@
 #include "../proto/command.pb.h"
 #include <opencv2/opencv.hpp>
 #include <thread>
+#include "visionpipeline.h"
+#include "ArucoPipeline.h"
 
 class VisionManager
 {
@@ -11,6 +13,7 @@ public:
     VisionManager();
     void ProcessCommand(Command::CommandToCamera&  toCamera);
     void StartCamera();
+
 private:
 
     void CameraThread();
@@ -18,6 +21,7 @@ private:
 
     cv::VideoCapture cap;
     cv::Mat image;
+    ArucoPipeline arucoPipeline;
 };
 
 #endif // VISIONMANAGER_H

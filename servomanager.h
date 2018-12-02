@@ -10,11 +10,13 @@ public:
     ServoManager();
     static Command::ResponceFromServo processServoCommand(Command::CommandToServo& command);
     static void setAngleF(int idx, float angle);
+    static void turnOnServoPower(bool on);
 private:
     static Command::ResponceFromServo getAngle(Command::CommandToServo& command);
     static Command::ResponceFromServo setAngle(Command::CommandToServo& command);
     static Command::ResponceFromServo getVoltage(Command::CommandToServo& command);
     static Command::ResponceFromServo getTemperature(Command::CommandToServo& command);
+
 };
 
 #endif // SERVOMANAGER_H
