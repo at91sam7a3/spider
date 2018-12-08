@@ -8,7 +8,7 @@ class VisionPipeline
 public:
     VisionPipeline(){;}
     virtual ~VisionPipeline(){;};
-    virtual void ProcessPipeline(const cv::Mat &src)=0;
+    virtual void ProcessPipeline(cv::Mat &src)=0;
 
 };
 

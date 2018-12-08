@@ -20,7 +20,7 @@ private:
     std::shared_ptr<std::thread> camera_thread_;
 
     cv::VideoCapture cap;
-    cv::Mat image;
+   // cv::Mat image;
     ArucoPipeline arucoPipeline;
 };
 
