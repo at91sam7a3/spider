@@ -42,6 +42,7 @@ void VisionManager::CameraThread()
     zmq::socket_t socket (context, ZMQ_PAIR);
     socket.bind ("tcp://*:5557");
     cv::Size size(640,480);
+    cv::Mat image;
     while(true)
     {
         cap >> image;
