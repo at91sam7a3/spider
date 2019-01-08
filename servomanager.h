@@ -9,7 +9,7 @@ class ServoManager
 public:
     ServoManager();
     static Command::ResponceFromServo processServoCommand(Command::CommandToServo& command);
-    static void setAngleF(int idx, float angle);
+    static void setAngleF(int idx, double angle);
     static void turnOnServoPower(bool on);
 private:
     static Command::ResponceFromServo getAngle(Command::CommandToServo& command);

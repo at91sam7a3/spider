@@ -16,8 +16,10 @@ message ResponceFromServo {
 
 message MoveCommand{
     required string command = 1;
-    optional int32 steps = 2;
-    optional int32 parameter = 3;
+    optional int32 x = 2;
+    optional int32 y = 3;
+    optional int32 rotation_before=4;
+    optional int32 rotation_after=5;
 }
 
 message LegMoveCommand{

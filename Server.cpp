@@ -10,7 +10,6 @@
 #include "proto/command.pb.h"
 #include "servomanager.h"
 #include "Communication.h"
-#include "MoveCommands.h"
 //#include <mosquittopp.h>
 
 //#include "drivers/mpu6050simple.h"
@@ -87,30 +86,30 @@ void Server::ordersThread()
         char commandType = *(static_cast<char*>(request.data()));
         switch(commandType)
         {
-        case COMMAND_TO_SERVO:
+        /*case COMMAND_TO_SERVO:
         {
             std::cout << "COMMAND_TO_SERVO" << std::endl;
 
             Command::CommandToServo  toServo;
             toServo.ParseFromArray(static_cast<char*>(request.data())+1,static_cast<int>(request.size()-1));
             std::cout << toServo.name().c_str()<<std::endl;
-            Command::ResponceFromServo fromServo = ServoManager::processServoCommand(toServo);
+            //Command::ResponceFromServo fromServo = ServoManager::processServoCommand(toServo);
             std::string replyString(fromServo.SerializeAsString());
             //  Send reply back to client
             zmq::message_t reply (replyString.length());
             memcpy (reply.data (), replyString.c_str(), replyString.length());
             socket.send (reply);
         }
-            break;
+            break;*/
         case MOVE_COMMAND:
         {
             Command::MoveCommand  mc;
             mc.ParseFromArray(static_cast<char*>(request.data())+1,static_cast<int>(request.size()-1));
-            if(mc.has_steps())
-                MoveCommands::GetInstance()->DoAction(mc.command(), mc.steps());
+            if(mc.has_x())
+                platform.GoToPosition(vec2f(mc.x(),mc.y()));
 
-            if(mc.has_parameter())
-                MoveCommands::GetInstance()->DoAction2(mc.command(), mc.parameter());
+            if(mc.has_rotation_before())
+                platform.Turn(mc.rotation_before());
 
             zmq::message_t reply (1);
             char rep=EMPTY_ANSWER;
@@ -118,7 +117,7 @@ void Server::ordersThread()
             socket.send (reply);
         }
             break;
-        case LEG_MOVEMENT:
+        /*case LEG_MOVEMENT:
         {
             Command::LegMoveCommand lmc;
             lmc.ParseFromArray(static_cast<char*>(request.data())+1,static_cast<int>(request.size()-1));
@@ -132,7 +131,7 @@ void Server::ordersThread()
             char rep=EMPTY_ANSWER;
             memcpy (reply.data (), &rep, 1);
             socket.send (reply);
-        }
+        }*/
         default:
 
             break;

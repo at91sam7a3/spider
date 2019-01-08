@@ -27,7 +27,7 @@ ServoManager::ServoManager()
     wiringPiSetup ();
     pinMode (7,OUTPUT);
     std::cout <<"Servos power on"<<std::endl;
-
+    turnOnServoPower(true);
     if (driver.isOperational()==false)
     {
         std::cout<<"Something wrong with connection, do you have rights? is port correct? is device online?"<<std::endl;
@@ -57,10 +57,10 @@ Command::ResponceFromServo ServoManager::processServoCommand(Command::CommandToS
     return commandDispatcher[commandName](command);
 }
 
-void ServoManager::setAngleF(int idx, float angle)
+void ServoManager::setAngleF(int idx, double angle)
 {
-    if (idx>8) angle = 180.0f - angle;
-    driver.ServoMoveTimeWrite(idx,degree2raw(angle),100);
+    if (idx>8) angle = 180.0 - angle;
+    driver.ServoMoveTimeWrite(idx,degree2raw(static_cast<int>(angle)),100);
 }
 
 void ServoManager::turnOnServoPower(bool on)

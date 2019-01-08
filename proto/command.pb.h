@@ -466,35 +466,55 @@ class MoveCommand : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::std::string* release_command();
   void set_allocated_command(::std::string* command);
 
-  // optional int32 steps = 2;
-  bool has_steps() const;
-  void clear_steps();
-  static const int kStepsFieldNumber = 2;
-  ::google::protobuf::int32 steps() const;
-  void set_steps(::google::protobuf::int32 value);
+  // optional int32 x = 2;
+  bool has_x() const;
+  void clear_x();
+  static const int kXFieldNumber = 2;
+  ::google::protobuf::int32 x() const;
+  void set_x(::google::protobuf::int32 value);
 
-  // optional int32 parameter = 3;
-  bool has_parameter() const;
-  void clear_parameter();
-  static const int kParameterFieldNumber = 3;
-  ::google::protobuf::int32 parameter() const;
-  void set_parameter(::google::protobuf::int32 value);
+  // optional int32 y = 3;
+  bool has_y() const;
+  void clear_y();
+  static const int kYFieldNumber = 3;
+  ::google::protobuf::int32 y() const;
+  void set_y(::google::protobuf::int32 value);
+
+  // optional int32 rotation_before = 4;
+  bool has_rotation_before() const;
+  void clear_rotation_before();
+  static const int kRotationBeforeFieldNumber = 4;
+  ::google::protobuf::int32 rotation_before() const;
+  void set_rotation_before(::google::protobuf::int32 value);
+
+  // optional int32 rotation_after = 5;
+  bool has_rotation_after() const;
+  void clear_rotation_after();
+  static const int kRotationAfterFieldNumber = 5;
+  ::google::protobuf::int32 rotation_after() const;
+  void set_rotation_after(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:Command.MoveCommand)
  private:
   void set_has_command();
   void clear_has_command();
-  void set_has_steps();
-  void clear_has_steps();
-  void set_has_parameter();
-  void clear_has_parameter();
+  void set_has_x();
+  void clear_has_x();
+  void set_has_y();
+  void clear_has_y();
+  void set_has_rotation_before();
+  void clear_has_rotation_before();
+  void set_has_rotation_after();
+  void clear_has_rotation_after();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable int _cached_size_;
   ::google::protobuf::internal::ArenaStringPtr command_;
-  ::google::protobuf::int32 steps_;
-  ::google::protobuf::int32 parameter_;
+  ::google::protobuf::int32 x_;
+  ::google::protobuf::int32 y_;
+  ::google::protobuf::int32 rotation_before_;
+  ::google::protobuf::int32 rotation_after_;
   friend struct ::protobuf_command_2eproto::TableStruct;
   friend void ::protobuf_command_2eproto::InitDefaultsMoveCommandImpl();
 };
@@ -1058,52 +1078,100 @@ inline void MoveCommand::set_allocated_command(::std::string* command) {
   // @@protoc_insertion_point(field_set_allocated:Command.MoveCommand.command)
 }
 
-// optional int32 steps = 2;
-inline bool MoveCommand::has_steps() const {
+// optional int32 x = 2;
+inline bool MoveCommand::has_x() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void MoveCommand::set_has_steps() {
+inline void MoveCommand::set_has_x() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void MoveCommand::clear_has_steps() {
+inline void MoveCommand::clear_has_x() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void MoveCommand::clear_steps() {
-  steps_ = 0;
-  clear_has_steps();
+inline void MoveCommand::clear_x() {
+  x_ = 0;
+  clear_has_x();
 }
-inline ::google::protobuf::int32 MoveCommand::steps() const {
-  // @@protoc_insertion_point(field_get:Command.MoveCommand.steps)
-  return steps_;
+inline ::google::protobuf::int32 MoveCommand::x() const {
+  // @@protoc_insertion_point(field_get:Command.MoveCommand.x)
+  return x_;
 }
-inline void MoveCommand::set_steps(::google::protobuf::int32 value) {
-  set_has_steps();
-  steps_ = value;
-  // @@protoc_insertion_point(field_set:Command.MoveCommand.steps)
+inline void MoveCommand::set_x(::google::protobuf::int32 value) {
+  set_has_x();
+  x_ = value;
+  // @@protoc_insertion_point(field_set:Command.MoveCommand.x)
 }
 
-// optional int32 parameter = 3;
-inline bool MoveCommand::has_parameter() const {
+// optional int32 y = 3;
+inline bool MoveCommand::has_y() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void MoveCommand::set_has_parameter() {
+inline void MoveCommand::set_has_y() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void MoveCommand::clear_has_parameter() {
+inline void MoveCommand::clear_has_y() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void MoveCommand::clear_parameter() {
-  parameter_ = 0;
-  clear_has_parameter();
+inline void MoveCommand::clear_y() {
+  y_ = 0;
+  clear_has_y();
 }
-inline ::google::protobuf::int32 MoveCommand::parameter() const {
-  // @@protoc_insertion_point(field_get:Command.MoveCommand.parameter)
-  return parameter_;
+inline ::google::protobuf::int32 MoveCommand::y() const {
+  // @@protoc_insertion_point(field_get:Command.MoveCommand.y)
+  return y_;
 }
-inline void MoveCommand::set_parameter(::google::protobuf::int32 value) {
-  set_has_parameter();
-  parameter_ = value;
-  // @@protoc_insertion_point(field_set:Command.MoveCommand.parameter)
+inline void MoveCommand::set_y(::google::protobuf::int32 value) {
+  set_has_y();
+  y_ = value;
+  // @@protoc_insertion_point(field_set:Command.MoveCommand.y)
+}
+
+// optional int32 rotation_before = 4;
+inline bool MoveCommand::has_rotation_before() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void MoveCommand::set_has_rotation_before() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void MoveCommand::clear_has_rotation_before() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void MoveCommand::clear_rotation_before() {
+  rotation_before_ = 0;
+  clear_has_rotation_before();
+}
+inline ::google::protobuf::int32 MoveCommand::rotation_before() const {
+  // @@protoc_insertion_point(field_get:Command.MoveCommand.rotation_before)
+  return rotation_before_;
+}
+inline void MoveCommand::set_rotation_before(::google::protobuf::int32 value) {
+  set_has_rotation_before();
+  rotation_before_ = value;
+  // @@protoc_insertion_point(field_set:Command.MoveCommand.rotation_before)
+}
+
+// optional int32 rotation_after = 5;
+inline bool MoveCommand::has_rotation_after() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void MoveCommand::set_has_rotation_after() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void MoveCommand::clear_has_rotation_after() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void MoveCommand::clear_rotation_after() {
+  rotation_after_ = 0;
+  clear_has_rotation_after();
+}
+inline ::google::protobuf::int32 MoveCommand::rotation_after() const {
+  // @@protoc_insertion_point(field_get:Command.MoveCommand.rotation_after)
+  return rotation_after_;
+}
+inline void MoveCommand::set_rotation_after(::google::protobuf::int32 value) {
+  set_has_rotation_after();
+  rotation_after_ = value;
+  // @@protoc_insertion_point(field_set:Command.MoveCommand.rotation_after)
 }
 
 // -------------------------------------------------------------------

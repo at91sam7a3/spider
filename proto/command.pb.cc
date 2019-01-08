@@ -185,11 +185,15 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::MoveCommand, command_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::MoveCommand, steps_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::MoveCommand, parameter_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::MoveCommand, x_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::MoveCommand, y_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::MoveCommand, rotation_before_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::MoveCommand, rotation_after_),
   0,
   1,
   2,
+  3,
+  4,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::LegMoveCommand, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::LegMoveCommand, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -216,9 +220,9 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 11, sizeof(::Command::CommandToServo)},
   { 17, 23, sizeof(::Command::ResponceFromServo)},
-  { 24, 32, sizeof(::Command::MoveCommand)},
-  { 35, 44, sizeof(::Command::LegMoveCommand)},
-  { 48, 55, sizeof(::Command::CommandToCamera)},
+  { 24, 34, sizeof(::Command::MoveCommand)},
+  { 39, 48, sizeof(::Command::LegMoveCommand)},
+  { 52, 59, sizeof(::Command::CommandToCamera)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -255,14 +259,15 @@ void AddDescriptorsImpl() {
       "vo\022\014\n\004name\030\001 \002(\t\022\017\n\007servoId\030\002 \002(\r\022\016\n\006par"
       "am1\030\003 \001(\005\022\016\n\006param2\030\004 \001(\005\022\016\n\006param3\030\005 \001("
       "\005\022\016\n\006param4\030\006 \001(\005\"#\n\021ResponceFromServo\022\016"
-      "\n\006result\030\001 \002(\005\"@\n\013MoveCommand\022\017\n\007command"
-      "\030\001 \002(\t\022\r\n\005steps\030\002 \001(\005\022\021\n\tparameter\030\003 \001(\005"
-      "\">\n\016LegMoveCommand\022\013\n\003leg\030\001 \002(\r\022\t\n\001x\030\002 \002"
-      "(\005\022\t\n\001y\030\003 \002(\005\022\t\n\001z\030\004 \002(\005\"1\n\017CommandToCam"
-      "era\022\017\n\007command\030\001 \002(\t\022\r\n\005param\030\002 \001(\005"
+      "\n\006result\030\001 \002(\005\"e\n\013MoveCommand\022\017\n\007command"
+      "\030\001 \002(\t\022\t\n\001x\030\002 \001(\005\022\t\n\001y\030\003 \001(\005\022\027\n\017rotation"
+      "_before\030\004 \001(\005\022\026\n\016rotation_after\030\005 \001(\005\">\n"
+      "\016LegMoveCommand\022\013\n\003leg\030\001 \002(\r\022\t\n\001x\030\002 \002(\005\022"
+      "\t\n\001y\030\003 \002(\005\022\t\n\001z\030\004 \002(\005\"1\n\017CommandToCamera"
+      "\022\017\n\007command\030\001 \002(\t\022\r\n\005param\030\002 \001(\005"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 355);
+      descriptor, 392);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "command.proto", &protobuf_RegisterTypes);
 }
@@ -1012,8 +1017,10 @@ void MoveCommand::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MoveCommand::kCommandFieldNumber;
-const int MoveCommand::kStepsFieldNumber;
-const int MoveCommand::kParameterFieldNumber;
+const int MoveCommand::kXFieldNumber;
+const int MoveCommand::kYFieldNumber;
+const int MoveCommand::kRotationBeforeFieldNumber;
+const int MoveCommand::kRotationAfterFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MoveCommand::MoveCommand()
@@ -1034,18 +1041,18 @@ MoveCommand::MoveCommand(const MoveCommand& from)
   if (from.has_command()) {
     command_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.command_);
   }
-  ::memcpy(&steps_, &from.steps_,
-    static_cast<size_t>(reinterpret_cast<char*>(&parameter_) -
-    reinterpret_cast<char*>(&steps_)) + sizeof(parameter_));
+  ::memcpy(&x_, &from.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&rotation_after_) -
+    reinterpret_cast<char*>(&x_)) + sizeof(rotation_after_));
   // @@protoc_insertion_point(copy_constructor:Command.MoveCommand)
 }
 
 void MoveCommand::SharedCtor() {
   _cached_size_ = 0;
   command_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&steps_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&parameter_) -
-      reinterpret_cast<char*>(&steps_)) + sizeof(parameter_));
+  ::memset(&x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&rotation_after_) -
+      reinterpret_cast<char*>(&x_)) + sizeof(rotation_after_));
 }
 
 MoveCommand::~MoveCommand() {
@@ -1091,10 +1098,10 @@ void MoveCommand::Clear() {
     GOOGLE_DCHECK(!command_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
     (*command_.UnsafeRawStringPointer())->clear();
   }
-  if (cached_has_bits & 6u) {
-    ::memset(&steps_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&parameter_) -
-        reinterpret_cast<char*>(&steps_)) + sizeof(parameter_));
+  if (cached_has_bits & 30u) {
+    ::memset(&x_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&rotation_after_) -
+        reinterpret_cast<char*>(&x_)) + sizeof(rotation_after_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -1126,28 +1133,56 @@ bool MoveCommand::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 steps = 2;
+      // optional int32 x = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
-          set_has_steps();
+          set_has_x();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &steps_)));
+                 input, &x_)));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // optional int32 parameter = 3;
+      // optional int32 y = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
-          set_has_parameter();
+          set_has_y();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &parameter_)));
+                 input, &y_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 rotation_before = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+          set_has_rotation_before();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &rotation_before_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 rotation_after = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+          set_has_rotation_after();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &rotation_after_)));
         } else {
           goto handle_unusual;
         }
@@ -1191,14 +1226,24 @@ void MoveCommand::SerializeWithCachedSizes(
       1, this->command(), output);
   }
 
-  // optional int32 steps = 2;
+  // optional int32 x = 2;
   if (cached_has_bits & 0x00000002u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->steps(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->x(), output);
   }
 
-  // optional int32 parameter = 3;
+  // optional int32 y = 3;
   if (cached_has_bits & 0x00000004u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->parameter(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->y(), output);
+  }
+
+  // optional int32 rotation_before = 4;
+  if (cached_has_bits & 0x00000008u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->rotation_before(), output);
+  }
+
+  // optional int32 rotation_after = 5;
+  if (cached_has_bits & 0x00000010u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->rotation_after(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1227,14 +1272,24 @@ void MoveCommand::SerializeWithCachedSizes(
         1, this->command(), target);
   }
 
-  // optional int32 steps = 2;
+  // optional int32 x = 2;
   if (cached_has_bits & 0x00000002u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->steps(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->x(), target);
   }
 
-  // optional int32 parameter = 3;
+  // optional int32 y = 3;
   if (cached_has_bits & 0x00000004u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->parameter(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->y(), target);
+  }
+
+  // optional int32 rotation_before = 4;
+  if (cached_has_bits & 0x00000008u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->rotation_before(), target);
+  }
+
+  // optional int32 rotation_after = 5;
+  if (cached_has_bits & 0x00000010u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->rotation_after(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1260,19 +1315,33 @@ size_t MoveCommand::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->command());
   }
-  if (_has_bits_[0 / 32] & 6u) {
-    // optional int32 steps = 2;
-    if (has_steps()) {
+  if (_has_bits_[0 / 32] & 30u) {
+    // optional int32 x = 2;
+    if (has_x()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->steps());
+          this->x());
     }
 
-    // optional int32 parameter = 3;
-    if (has_parameter()) {
+    // optional int32 y = 3;
+    if (has_y()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->parameter());
+          this->y());
+    }
+
+    // optional int32 rotation_before = 4;
+    if (has_rotation_before()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->rotation_before());
+    }
+
+    // optional int32 rotation_after = 5;
+    if (has_rotation_after()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->rotation_after());
     }
 
   }
@@ -1306,16 +1375,22 @@ void MoveCommand::MergeFrom(const MoveCommand& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 7u) {
+  if (cached_has_bits & 31u) {
     if (cached_has_bits & 0x00000001u) {
       set_has_command();
       command_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.command_);
     }
     if (cached_has_bits & 0x00000002u) {
-      steps_ = from.steps_;
+      x_ = from.x_;
     }
     if (cached_has_bits & 0x00000004u) {
-      parameter_ = from.parameter_;
+      y_ = from.y_;
+    }
+    if (cached_has_bits & 0x00000008u) {
+      rotation_before_ = from.rotation_before_;
+    }
+    if (cached_has_bits & 0x00000010u) {
+      rotation_after_ = from.rotation_after_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -1347,8 +1422,10 @@ void MoveCommand::Swap(MoveCommand* other) {
 void MoveCommand::InternalSwap(MoveCommand* other) {
   using std::swap;
   command_.Swap(&other->command_);
-  swap(steps_, other->steps_);
-  swap(parameter_, other->parameter_);
+  swap(x_, other->x_);
+  swap(y_, other->y_);
+  swap(rotation_before_, other->rotation_before_);
+  swap(rotation_after_, other->rotation_after_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);

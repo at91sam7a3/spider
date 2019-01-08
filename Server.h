@@ -10,7 +10,7 @@
 
 #include <thread>
 #include <memory>
-
+#include "platform.h"
 #include "vision/visionmanager.h"
 
 namespace spider {
@@ -27,12 +27,12 @@ private:
     void settingThread();
     void ordersThread();
 //    void mosquittoThread();
-    std::shared_ptr<std::thread> orders_thread_;
-    std::shared_ptr<std::thread> settings_thread_;
+    std::unique_ptr<std::thread> orders_thread_;
+    std::unique_ptr<std::thread> settings_thread_;
 //    std::shared_ptr<std::thread> mosquitto_thread_;
 
    VisionManager visionManager_;
-
+   Platform platform;
 };
 
 } /* namespace spider */

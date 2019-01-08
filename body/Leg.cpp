@@ -7,18 +7,23 @@
 
 namespace spider {
 //leg parts sizes
-static const float cLegPart=52;
-static const float bLegPart=81;
-static const float aLegPart=124;
+static const double cLegPart=52;
+static const double bLegPart=81;
+static const double aLegPart=124;
 // phisical coordinates where legs attached on body
-static const float centerYOffset=93.5;  //65
-static const float rearYOffset=57.5;
-static const float rearXOffset=99;
+static const double centerYOffset=93.5;  //65
+static const double rearYOffset=57.5;
+static const double rearXOffset=99;
+static const double stepHeight = 60;//How far robot raise a leg on step
 
 Leg::Leg()
-    :bodyHeight_(120)
+    :bodyHeight_(100)
+    ,leg_position(on_ground)
+    ,currentLegrotationOffset_(0)
     ,xPos_(0)
     ,yPos_(0)
+    ,xCenterPos_(0)
+    ,yCenterPos_(0)
     ,distanceFromGround_(0)
 {
 
@@ -32,32 +37,39 @@ void Leg::SetLegIndex(int idx)
     indexes_.push_back(idx*3+2);
 
     angleCOffsetAccordingToLegAttachment_ = 0;
-    // if((idx==0) ||(idx==5)) { xPos_=10; yPos_=10;}
-    // if((idx==2) ||(idx==3)) { xPos_=-10;yPos_=10;}
-/*    if(idx==0) angleCOffsetAccordingToLegAttachment_ = -60;
+
+    if(idx==0) angleCOffsetAccordingToLegAttachment_ = -30;
     if(idx==1) angleCOffsetAccordingToLegAttachment_ = -90;
-    if(idx==2) angleCOffsetAccordingToLegAttachment_ = -120;
-    if(idx==3) angleCOffsetAccordingToLegAttachment_ = -120;
+    if(idx==2) angleCOffsetAccordingToLegAttachment_ = -150;
+    if(idx==3) angleCOffsetAccordingToLegAttachment_ = -150;
     if(idx==4) angleCOffsetAccordingToLegAttachment_ = -90;
-    if(idx==5) angleCOffsetAccordingToLegAttachment_ = -60;  */
+    if(idx==5) angleCOffsetAccordingToLegAttachment_ = -30;
 
+    if((idx==1) || (idx==4))
+            yCenterPos_=160;
 
-        if(idx==0) angleCOffsetAccordingToLegAttachment_ = -30;
-        if(idx==1) angleCOffsetAccordingToLegAttachment_ = -90;
-        if(idx==2) angleCOffsetAccordingToLegAttachment_ = -150;
-        if(idx==3) angleCOffsetAccordingToLegAttachment_ = -150;
-        if(idx==4) angleCOffsetAccordingToLegAttachment_ = -90;
-        if(idx==5) angleCOffsetAccordingToLegAttachment_ = -30;
+    if((idx==0) || (idx==5))
+            xCenterPos_=60;
+            yCenterPos_=100;
 
+    if((idx==2) || (idx==3))
+            xCenterPos_=-60;
+            yCenterPos_=100;
+
+}
+
+int Leg::GetLegIndex()
+{
+    return legIndex_;
 }
 
 void Leg::RecalcAngles()
 {
-    if(yPos_==0) yPos_=0.01f;
+    if(yPos_==0.0) yPos_=0.01;
     // angle Gamma (angleC_)
-    angleC_ = atan(xPos_/yPos_);
-    float L1 = sqrt( xPos_ * xPos_ + yPos_ * yPos_ );
-    float L = sqrt( pow(bodyHeight_,2.0) + pow((L1 - cLegPart),2));
+    angleC_ = (atan(xPos_/yPos_));
+    double L1 = sqrt( xPos_ * xPos_ + yPos_ * yPos_ );
+    double L = sqrt( pow(bodyHeight_,2.0) + pow((L1 - cLegPart),2));
     // angle alpfa
     angleA_ = acos((bodyHeight_-distanceFromGround_)/L)
             + acos(((pow(aLegPart,2)-pow(bLegPart,2)-pow(L,2)))
@@ -68,39 +80,52 @@ void Leg::RecalcAngles()
 
     //set angles directly to servos
 
-    angleA_ = angleA_ *180 / 3.1415f;
-    angleB_ = angleB_ *180 /3.1415f;
-    angleC_ = angleC_ *180 /3.1415f;
+    angleA_ = angleA_ *180 / 3.1415;
+    angleB_ = angleB_ *180 /3.1415;
+    angleC_ = angleC_ *180 /3.1415;
     ServoManager::setAngleF(indexes_[0], angleA_);
     ServoManager::setAngleF(indexes_[1],180 -angleB_);
     ServoManager::setAngleF(indexes_[2],angleC_-angleCOffsetAccordingToLegAttachment_);
-    std::cout<<"LEG "<<legIndex_<<" angles<< A "<<angleA_<<" B "<<angleB_<<" C "<<angleC_<<std::endl;
+   // std::cout<<"LEG "<<legIndex_<<" angles<< A "<<angleA_<<" B "<<angleB_<<" C "<<angleC_<<std::endl;
 }
 
-void Leg::SetXY(float x, float y) //TODO
+void Leg::SetXY(double x, double y) //TODO
 {
     xPos_ = x;
     yPos_ = y;
+    if(legIndex_==0)
+    {
+        std::cout<<" set LEG0 x,y = "<<x<<","<<y<<std::endl;
+    }
+}
+
+void Leg::LegAddOffsetInGlobal(double xoffset, double yoffset)
+{
+    xPos_-=xoffset;
+    if(legIndex_<3)
+    {
+         yPos_+=yoffset;
+    }
+    else {
+         yPos_-=yoffset;
+    }
 }
 
 void Leg::SetLegCoord(LegCoodinates &lc)
 {
     SetXY(lc.x,lc.y);
     distanceFromGround_ = lc.height;
-    RecalcAngles();
-    //std::cout <<" Leg "<<legIndex_<<" set "<<lc.x<<" , "<<lc.y<<" , "<<lc.height<<std::endl;
-    //std::cout <<" body height "<<bodyHeight_<<std::endl;
+    //RecalcAngles();
 }
 
 LegCoodinates Leg::GetLegCoord()
 {
+    if(legIndex_==0)
+    {
+        std::cout<<" get LEG0 x,y = "<<xPos_<<","<<yPos_<<std::endl;
+    }
     LegCoodinates lc(xPos_,yPos_,distanceFromGround_);
     return lc;
-}
-
-std::string Leg::GetStringForServos()
-{
-    return std::string();
 }
 
 std::vector<int> Leg::GetMotorIndexes()
@@ -150,7 +175,7 @@ LegCoodinates Leg::GlobalToLocal(LegCoodinates &lc)
     return res;
 }
 
-float Leg::GetLegDirectionInGlobalCoordinates()
+double Leg::GetLegDirectionInGlobalCoordinates()
 {
     switch(legIndex_)
     {
@@ -173,7 +198,7 @@ float Leg::GetLegDirectionInGlobalCoordinates()
         return 120;
 
     default:
-
+        throw std::exception();
         break;
     }
 }
@@ -191,6 +216,49 @@ void Leg::SetMotorAngle(int idx, int angle)
     case 2:
         ServoManager::setAngleF(indexes_[2],angle-angleCOffsetAccordingToLegAttachment_);
         break;
+    }
+}
+
+double Leg::GetDistanceFromCenter()
+{
+    double xDist=fabs(xPos_-xCenterPos_);
+    double yDist=fabs(yPos_-yCenterPos_);
+    return sqrt( xDist * xDist + yDist * yDist );
+}
+
+bool Leg::IsInCenter()
+{
+    if((fabs(xPos_-xCenterPos_) < 0.001) && (fabs(yPos_-yCenterPos_)<0.001)) return true;
+    return false;
+}
+
+void Leg::MoveLegUp()
+{
+    distanceFromGround_ = stepHeight;
+    leg_position = in_air;
+    if(legIndex_==0)
+    {
+        std::cout<<"LEG0 UP "<<std::endl;
+    }
+}
+
+void Leg::MoveLegDown()
+{
+    distanceFromGround_ = 0;
+    leg_position = on_ground;
+    if(legIndex_==0)
+    {
+        std::cout<<"LEG0 DOWN "<<std::endl;
+    }
+}
+
+void Leg::MoveLegToCenter()
+{
+    xPos_=xCenterPos_;
+    yPos_=yCenterPos_;
+    if(legIndex_==0)
+    {
+        std::cout<<"LEG0 TO CENTER "<<std::endl;
     }
 }
 }

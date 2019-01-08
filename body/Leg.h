@@ -33,9 +33,9 @@ struct LegCoodinates
     {
 
     }
-    float x;
-    float y;
-    float height;
+    double x;
+    double y;
+    double height;
 };
 
 
@@ -46,34 +46,47 @@ public:
     Leg();
 
     void SetLegIndex(int idx);
+    int GetLegIndex();
     void RecalcAngles();
-    void SetXY(float,float);
+    void SetXY(double,double);
+    void LegAddOffsetInGlobal(double,double);
 
     void SetLegCoord(LegCoodinates & lc);
     LegCoodinates GetLegCoord();
     //input
-    std::string GetStringForServos();
     std::vector<int> GetMotorIndexes();
     // convert global coordinates to local for this leg
     LegCoodinates GlobalToLocal(LegCoodinates &lc);
     // get Leg angle
-    float GetLegDirectionInGlobalCoordinates();
-    float bodyHeight_;
+    double GetLegDirectionInGlobalCoordinates();
+    double bodyHeight_;
 
     void SetMotorAngle(int idx,int angle);
+    enum LegPosition { on_ground=0, in_air=1 } leg_position;
+    double GetDistanceFromCenter();
+    bool IsInCenter();
+    void MoveLegUp();
+    void MoveLegDown();
+    void MoveLegToCenter();
+    // this is needed only for rotating procesure
+    float currentLegrotationOffset_;
 private:
-    float xPos_;
-    float yPos_;
+    volatile double xPos_;
+    volatile double yPos_;
 
-    float distanceFromGround_; // leg height
+    double xCenterPos_;
+    double yCenterPos_;
+
+    double distanceFromGround_; // leg height
     //output, angles in radians
-    float angleA_;
-    float angleB_;
-    float angleC_;
+    double angleA_;
+    double angleB_;
+    double angleC_;
     //setted servos numbers
     std::vector<int> indexes_;
     int legIndex_;
     float angleCOffsetAccordingToLegAttachment_;
+
 };
 }
 #endif // LEG_H
