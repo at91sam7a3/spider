@@ -45,6 +45,11 @@ class CommandToCameraDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<CommandToCamera>
       _instance;
 } _CommandToCamera_default_instance_;
+class TelemetryUpdateDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<TelemetryUpdate>
+      _instance;
+} _TelemetryUpdate_default_instance_;
 }  // namespace Command
 namespace protobuf_command_2eproto {
 void InitDefaultsCommandToServoImpl() {
@@ -152,7 +157,28 @@ void InitDefaultsCommandToCamera() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsCommandToCameraImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[5];
+void InitDefaultsTelemetryUpdateImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::Command::_TelemetryUpdate_default_instance_;
+    new (ptr) ::Command::TelemetryUpdate();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Command::TelemetryUpdate::InitAsDefaultInstance();
+}
+
+void InitDefaultsTelemetryUpdate() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsTelemetryUpdateImpl);
+}
+
+::google::protobuf::Metadata file_level_metadata[6];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::CommandToServo, _has_bits_),
@@ -216,6 +242,19 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::CommandToCamera, param_),
   0,
   1,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::TelemetryUpdate, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::TelemetryUpdate, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::TelemetryUpdate, name_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::TelemetryUpdate, fvalue_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::TelemetryUpdate, svalue_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::Command::TelemetryUpdate, bvalue_),
+  0,
+  2,
+  1,
+  3,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 11, sizeof(::Command::CommandToServo)},
@@ -223,6 +262,7 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 24, 34, sizeof(::Command::MoveCommand)},
   { 39, 48, sizeof(::Command::LegMoveCommand)},
   { 52, 59, sizeof(::Command::CommandToCamera)},
+  { 61, 70, sizeof(::Command::TelemetryUpdate)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -231,6 +271,7 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::Command::_MoveCommand_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::Command::_LegMoveCommand_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::Command::_CommandToCamera_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::Command::_TelemetryUpdate_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -249,7 +290,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 5);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 6);
 }
 
 void AddDescriptorsImpl() {
@@ -264,10 +305,12 @@ void AddDescriptorsImpl() {
       "_before\030\004 \001(\005\022\026\n\016rotation_after\030\005 \001(\005\">\n"
       "\016LegMoveCommand\022\013\n\003leg\030\001 \002(\r\022\t\n\001x\030\002 \002(\005\022"
       "\t\n\001y\030\003 \002(\005\022\t\n\001z\030\004 \002(\005\"1\n\017CommandToCamera"
-      "\022\017\n\007command\030\001 \002(\t\022\r\n\005param\030\002 \001(\005"
+      "\022\017\n\007command\030\001 \002(\t\022\r\n\005param\030\002 \001(\005\"O\n\017Tele"
+      "metryUpdate\022\014\n\004name\030\001 \002(\t\022\016\n\006fvalue\030\002 \001("
+      "\002\022\016\n\006svalue\030\003 \001(\t\022\016\n\006bvalue\030\004 \001(\010"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 392);
+      descriptor, 473);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "command.proto", &protobuf_RegisterTypes);
 }
@@ -2135,6 +2178,418 @@ void CommandToCamera::InternalSwap(CommandToCamera* other) {
 }
 
 ::google::protobuf::Metadata CommandToCamera::GetMetadata() const {
+  protobuf_command_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_command_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void TelemetryUpdate::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int TelemetryUpdate::kNameFieldNumber;
+const int TelemetryUpdate::kFvalueFieldNumber;
+const int TelemetryUpdate::kSvalueFieldNumber;
+const int TelemetryUpdate::kBvalueFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+TelemetryUpdate::TelemetryUpdate()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_command_2eproto::InitDefaultsTelemetryUpdate();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Command.TelemetryUpdate)
+}
+TelemetryUpdate::TelemetryUpdate(const TelemetryUpdate& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_name()) {
+    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  svalue_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_svalue()) {
+    svalue_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.svalue_);
+  }
+  ::memcpy(&fvalue_, &from.fvalue_,
+    static_cast<size_t>(reinterpret_cast<char*>(&bvalue_) -
+    reinterpret_cast<char*>(&fvalue_)) + sizeof(bvalue_));
+  // @@protoc_insertion_point(copy_constructor:Command.TelemetryUpdate)
+}
+
+void TelemetryUpdate::SharedCtor() {
+  _cached_size_ = 0;
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  svalue_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&fvalue_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&bvalue_) -
+      reinterpret_cast<char*>(&fvalue_)) + sizeof(bvalue_));
+}
+
+TelemetryUpdate::~TelemetryUpdate() {
+  // @@protoc_insertion_point(destructor:Command.TelemetryUpdate)
+  SharedDtor();
+}
+
+void TelemetryUpdate::SharedDtor() {
+  name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  svalue_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void TelemetryUpdate::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* TelemetryUpdate::descriptor() {
+  ::protobuf_command_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_command_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const TelemetryUpdate& TelemetryUpdate::default_instance() {
+  ::protobuf_command_2eproto::InitDefaultsTelemetryUpdate();
+  return *internal_default_instance();
+}
+
+TelemetryUpdate* TelemetryUpdate::New(::google::protobuf::Arena* arena) const {
+  TelemetryUpdate* n = new TelemetryUpdate;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void TelemetryUpdate::Clear() {
+// @@protoc_insertion_point(message_clear_start:Command.TelemetryUpdate)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 3u) {
+    if (cached_has_bits & 0x00000001u) {
+      GOOGLE_DCHECK(!name_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
+      (*name_.UnsafeRawStringPointer())->clear();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      GOOGLE_DCHECK(!svalue_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
+      (*svalue_.UnsafeRawStringPointer())->clear();
+    }
+  }
+  if (cached_has_bits & 12u) {
+    ::memset(&fvalue_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&bvalue_) -
+        reinterpret_cast<char*>(&fvalue_)) + sizeof(bvalue_));
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool TelemetryUpdate::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Command.TelemetryUpdate)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string name = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->name().data(), static_cast<int>(this->name().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "Command.TelemetryUpdate.name");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional float fvalue = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(21u /* 21 & 0xFF */)) {
+          set_has_fvalue();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &fvalue_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional string svalue = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_svalue()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->svalue().data(), static_cast<int>(this->svalue().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "Command.TelemetryUpdate.svalue");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional bool bvalue = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+          set_has_bvalue();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &bvalue_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Command.TelemetryUpdate)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Command.TelemetryUpdate)
+  return false;
+#undef DO_
+}
+
+void TelemetryUpdate::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Command.TelemetryUpdate)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string name = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "Command.TelemetryUpdate.name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->name(), output);
+  }
+
+  // optional float fvalue = 2;
+  if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->fvalue(), output);
+  }
+
+  // optional string svalue = 3;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->svalue().data(), static_cast<int>(this->svalue().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "Command.TelemetryUpdate.svalue");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->svalue(), output);
+  }
+
+  // optional bool bvalue = 4;
+  if (cached_has_bits & 0x00000008u) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(4, this->bvalue(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Command.TelemetryUpdate)
+}
+
+::google::protobuf::uint8* TelemetryUpdate::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:Command.TelemetryUpdate)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required string name = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "Command.TelemetryUpdate.name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->name(), target);
+  }
+
+  // optional float fvalue = 2;
+  if (cached_has_bits & 0x00000004u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->fvalue(), target);
+  }
+
+  // optional string svalue = 3;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->svalue().data(), static_cast<int>(this->svalue().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "Command.TelemetryUpdate.svalue");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->svalue(), target);
+  }
+
+  // optional bool bvalue = 4;
+  if (cached_has_bits & 0x00000008u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->bvalue(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Command.TelemetryUpdate)
+  return target;
+}
+
+size_t TelemetryUpdate::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Command.TelemetryUpdate)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  // required string name = 1;
+  if (has_name()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->name());
+  }
+  if (_has_bits_[0 / 32] & 14u) {
+    // optional string svalue = 3;
+    if (has_svalue()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->svalue());
+    }
+
+    // optional float fvalue = 2;
+    if (has_fvalue()) {
+      total_size += 1 + 4;
+    }
+
+    // optional bool bvalue = 4;
+    if (has_bvalue()) {
+      total_size += 1 + 1;
+    }
+
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void TelemetryUpdate::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Command.TelemetryUpdate)
+  GOOGLE_DCHECK_NE(&from, this);
+  const TelemetryUpdate* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const TelemetryUpdate>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Command.TelemetryUpdate)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Command.TelemetryUpdate)
+    MergeFrom(*source);
+  }
+}
+
+void TelemetryUpdate::MergeFrom(const TelemetryUpdate& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Command.TelemetryUpdate)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 15u) {
+    if (cached_has_bits & 0x00000001u) {
+      set_has_name();
+      name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      set_has_svalue();
+      svalue_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.svalue_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      fvalue_ = from.fvalue_;
+    }
+    if (cached_has_bits & 0x00000008u) {
+      bvalue_ = from.bvalue_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void TelemetryUpdate::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Command.TelemetryUpdate)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void TelemetryUpdate::CopyFrom(const TelemetryUpdate& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Command.TelemetryUpdate)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool TelemetryUpdate::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  return true;
+}
+
+void TelemetryUpdate::Swap(TelemetryUpdate* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void TelemetryUpdate::InternalSwap(TelemetryUpdate* other) {
+  using std::swap;
+  name_.Swap(&other->name_);
+  svalue_.Swap(&other->svalue_);
+  swap(fvalue_, other->fvalue_);
+  swap(bvalue_, other->bvalue_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata TelemetryUpdate::GetMetadata() const {
   protobuf_command_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_command_2eproto::file_level_metadata[kIndexInFileMessages];
 }

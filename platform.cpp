@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 #include <cmath>
+#include "telemetrymanager.h"
 
 namespace spider {
 
@@ -31,7 +32,7 @@ Platform::Platform()
     ,currentCoordinates(0,0)
     ,moveSpeed(4)
     ,normalizedMovementVector()
-    ,currentMovementSpeed(0)
+    ,currentMovementSpeed(4)
     ,distanceLeft_(0.0)
     ,directionAngle(0.0) //lets say we looking at North
 {
@@ -53,6 +54,12 @@ void Platform::GoToPosition(vec2f newCoord)
     newMove.x = newCoord.x - currentCoordinates.x;
     newMove.y = newCoord.y - currentCoordinates.y;
     distanceLeft_ = sqrt( newMove.x * newMove.x + newMove.y  * newMove.y  );
+    if(distanceLeft_<0.001){
+        std::cout<<"Moving to current position not allowed, skipping"<<std::endl;
+        normalizedMovementVector.x=0;
+        normalizedMovementVector.y=0;
+        return;
+    }
     normalizedMovementVector.x=newMove.x / distanceLeft_;
     normalizedMovementVector.y=newMove.y / distanceLeft_;
     normalizedMovementVector.rotate(-directionAngle); //if we look east and have to go north then locally we go west
@@ -91,32 +98,27 @@ void Platform::procedureGo()
     //  bool anyLegNotInCenter=false;
     for(Leg& currentLeg : legs_)
     {
-        // if(!currentLeg.IsInCenter()) anyLegNotInCenter = true; //TODO maybe optimization is needed here
-        if(currentLeg.leg_position == Leg::in_air)
+        if(currentLeg.leg_position != Leg::on_ground)
         {
             anyLegInAir = true;
-            if(currentLeg.IsInCenter())
-                currentLeg.MoveLegDown();
-            else {
-                currentLeg.MoveLegToCenter();
-            }
+            currentLeg.ProcessLegMovingInAir();
         }
         else //leg on a ground
         {
-            if(distanceLeft_>moveSpeed) //make a full step
+            if(distanceLeft_>currentMovementSpeed) //make a full step
             {
-                currentLeg.LegAddOffsetInGlobal(normalizedMovementVector.x*moveSpeed,normalizedMovementVector.y*moveSpeed);
+                currentLeg.LegAddOffsetInGlobal(normalizedMovementVector.x*currentMovementSpeed,normalizedMovementVector.y*currentMovementSpeed);
             }
             else {
                 currentLeg.LegAddOffsetInGlobal(normalizedMovementVector.x*distanceLeft_,normalizedMovementVector.y*distanceLeft_);
             }
         }
     }
-    if(distanceLeft_>moveSpeed) //make a full step
+    if(distanceLeft_>currentMovementSpeed) //make a full step
     {
-        distanceLeft_-=moveSpeed;
-        currentCoordinates.x+=normalizedMovementVector.x*moveSpeed;
-        currentCoordinates.y+=normalizedMovementVector.y*moveSpeed;
+        distanceLeft_-=currentMovementSpeed;
+        currentCoordinates.x+=normalizedMovementVector.x*currentMovementSpeed;
+        currentCoordinates.y+=normalizedMovementVector.y*currentMovementSpeed;
     }
     else {
         currentCoordinates.x+=normalizedMovementVector.x*distanceLeft_;
@@ -146,7 +148,13 @@ void Platform::procedureGo()
         if(maxDist>=minimumDistanceStep){ //Dont make steps if it not really needed
             std::cout<<"Move up leg # "<<legToRaise<<std::endl;
             if(legToRaise!=-1){ // I think this check not needed, but let it be
-                legs_[legToRaise].MoveLegUp();
+
+                vec2f newPoint(legs_[legToRaise].GetCenterVec());
+                std::cout<<"Center is "<<newPoint.x<<" , "<<newPoint.y<<std::endl;
+                vec2f tmpOffsetVec=normalizedMovementVector*(maxDist/2);
+                newPoint=newPoint+tmpOffsetVec;
+                std::cout<<"new point "<<newPoint.x<<" , "<<newPoint.y<<std::endl;
+                legs_[legToRaise].MoveLegUp(newPoint);
             }
         }
     }

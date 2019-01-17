@@ -17,7 +17,7 @@ static const double rearXOffset=99;
 static const double stepHeight = 60;//How far robot raise a leg on step
 
 Leg::Leg()
-    :bodyHeight_(100)
+    :bodyHeight_(60)
     ,leg_position(on_ground)
     ,currentLegrotationOffset_(0)
     ,xPos_(0)
@@ -235,32 +235,48 @@ bool Leg::IsInCenter()
 void Leg::MoveLegUp()
 {
     distanceFromGround_ = stepHeight;
-    leg_position = in_air;
-    if(legIndex_==0)
-    {
-        std::cout<<"LEG0 UP "<<std::endl;
-    }
+    leg_position = moving_up;
 }
 
 void Leg::MoveLegDown()
 {
     distanceFromGround_ = 0;
     leg_position = on_ground;
-    if(legIndex_==0)
-    {
-        std::cout<<"LEG0 DOWN "<<std::endl;
-    }
 }
 
 void Leg::MoveLegToCenter()
 {
     xPos_=xCenterPos_;
     yPos_=yCenterPos_;
-    if(legIndex_==0)
-    {
-        std::cout<<"LEG0 TO CENTER "<<std::endl;
+}
+
+void Leg::MoveLegUp(vec2f newPositionOnGround)
+{
+    if(leg_position != on_ground)
+        throw(std::runtime_error("try to move up leg that already in air"));
+    newPositionOnGround_ = newPositionOnGround;
+    distanceFromGround_ = stepHeight;
+    leg_position=moving_up;
+}
+
+void Leg::ProcessLegMovingInAir()
+{
+    if(leg_position==moving_up){
+        leg_position=moving_to_target;
+        SetXY(newPositionOnGround_.x,newPositionOnGround_.y);
+        return;
+    }
+    if(leg_position==moving_to_target){
+        leg_position=on_ground;
+        distanceFromGround_=0;
     }
 }
+
+vec2f Leg::GetCenterVec()
+{
+    return vec2f(xCenterPos_,yCenterPos_ );
+}
+
 }
 
 

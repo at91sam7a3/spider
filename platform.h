@@ -2,7 +2,7 @@
 #define PLATFORM_H
 
 #include "body/Leg.h"
-#include <math.h>
+
 #include <memory>
 #include <thread>
 #include <vector>
@@ -11,28 +11,7 @@
 //This class manage all movements of robot
 //It contain it`s own thread, and really autonomous
 namespace spider {
-struct vec2f
-{
-    constexpr static const double PI=3.141592654;
-    vec2f()
-        :x(0)
-        ,y(0){};
-    vec2f(double x1,double y1)
-        :x(x1)
-        ,y(y1){};
 
-    double x;
-    double y;
-
-    void rotate(double angle)
-    {
-        double tmpAngle=angle*PI/180.0;
-        double tmpx=(cos(tmpAngle)*x)-(sin(tmpAngle)*y);
-        double tmpy=(sin(tmpAngle)*x)-(cos(tmpAngle)*y);
-        x=tmpx;
-        y=tmpy;
-    }
-};
 
 enum MovementState{
     Sleeping=0,

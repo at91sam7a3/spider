@@ -36,7 +36,7 @@ namespace protobuf_command_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[5];
+  static const ::google::protobuf::internal::ParseTable schema[6];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -52,12 +52,15 @@ void InitDefaultsLegMoveCommandImpl();
 void InitDefaultsLegMoveCommand();
 void InitDefaultsCommandToCameraImpl();
 void InitDefaultsCommandToCamera();
+void InitDefaultsTelemetryUpdateImpl();
+void InitDefaultsTelemetryUpdate();
 inline void InitDefaults() {
   InitDefaultsCommandToServo();
   InitDefaultsResponceFromServo();
   InitDefaultsMoveCommand();
   InitDefaultsLegMoveCommand();
   InitDefaultsCommandToCamera();
+  InitDefaultsTelemetryUpdate();
 }
 }  // namespace protobuf_command_2eproto
 namespace Command {
@@ -76,6 +79,9 @@ extern MoveCommandDefaultTypeInternal _MoveCommand_default_instance_;
 class ResponceFromServo;
 class ResponceFromServoDefaultTypeInternal;
 extern ResponceFromServoDefaultTypeInternal _ResponceFromServo_default_instance_;
+class TelemetryUpdate;
+class TelemetryUpdateDefaultTypeInternal;
+extern TelemetryUpdateDefaultTypeInternal _TelemetryUpdate_default_instance_;
 }  // namespace Command
 namespace Command {
 
@@ -789,6 +795,162 @@ class CommandToCamera : public ::google::protobuf::Message /* @@protoc_insertion
   friend struct ::protobuf_command_2eproto::TableStruct;
   friend void ::protobuf_command_2eproto::InitDefaultsCommandToCameraImpl();
 };
+// -------------------------------------------------------------------
+
+class TelemetryUpdate : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Command.TelemetryUpdate) */ {
+ public:
+  TelemetryUpdate();
+  virtual ~TelemetryUpdate();
+
+  TelemetryUpdate(const TelemetryUpdate& from);
+
+  inline TelemetryUpdate& operator=(const TelemetryUpdate& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  TelemetryUpdate(TelemetryUpdate&& from) noexcept
+    : TelemetryUpdate() {
+    *this = ::std::move(from);
+  }
+
+  inline TelemetryUpdate& operator=(TelemetryUpdate&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TelemetryUpdate& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const TelemetryUpdate* internal_default_instance() {
+    return reinterpret_cast<const TelemetryUpdate*>(
+               &_TelemetryUpdate_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    5;
+
+  void Swap(TelemetryUpdate* other);
+  friend void swap(TelemetryUpdate& a, TelemetryUpdate& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline TelemetryUpdate* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  TelemetryUpdate* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const TelemetryUpdate& from);
+  void MergeFrom(const TelemetryUpdate& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(TelemetryUpdate* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string name = 1;
+  bool has_name() const;
+  void clear_name();
+  static const int kNameFieldNumber = 1;
+  const ::std::string& name() const;
+  void set_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_name(::std::string&& value);
+  #endif
+  void set_name(const char* value);
+  void set_name(const char* value, size_t size);
+  ::std::string* mutable_name();
+  ::std::string* release_name();
+  void set_allocated_name(::std::string* name);
+
+  // optional string svalue = 3;
+  bool has_svalue() const;
+  void clear_svalue();
+  static const int kSvalueFieldNumber = 3;
+  const ::std::string& svalue() const;
+  void set_svalue(const ::std::string& value);
+  #if LANG_CXX11
+  void set_svalue(::std::string&& value);
+  #endif
+  void set_svalue(const char* value);
+  void set_svalue(const char* value, size_t size);
+  ::std::string* mutable_svalue();
+  ::std::string* release_svalue();
+  void set_allocated_svalue(::std::string* svalue);
+
+  // optional float fvalue = 2;
+  bool has_fvalue() const;
+  void clear_fvalue();
+  static const int kFvalueFieldNumber = 2;
+  float fvalue() const;
+  void set_fvalue(float value);
+
+  // optional bool bvalue = 4;
+  bool has_bvalue() const;
+  void clear_bvalue();
+  static const int kBvalueFieldNumber = 4;
+  bool bvalue() const;
+  void set_bvalue(bool value);
+
+  // @@protoc_insertion_point(class_scope:Command.TelemetryUpdate)
+ private:
+  void set_has_name();
+  void clear_has_name();
+  void set_has_fvalue();
+  void clear_has_fvalue();
+  void set_has_svalue();
+  void clear_has_svalue();
+  void set_has_bvalue();
+  void clear_has_bvalue();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable int _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::internal::ArenaStringPtr svalue_;
+  float fvalue_;
+  bool bvalue_;
+  friend struct ::protobuf_command_2eproto::TableStruct;
+  friend void ::protobuf_command_2eproto::InitDefaultsTelemetryUpdateImpl();
+};
 // ===================================================================
 
 
@@ -1365,9 +1527,189 @@ inline void CommandToCamera::set_param(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:Command.CommandToCamera.param)
 }
 
+// -------------------------------------------------------------------
+
+// TelemetryUpdate
+
+// required string name = 1;
+inline bool TelemetryUpdate::has_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void TelemetryUpdate::set_has_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void TelemetryUpdate::clear_has_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void TelemetryUpdate::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_name();
+}
+inline const ::std::string& TelemetryUpdate::name() const {
+  // @@protoc_insertion_point(field_get:Command.TelemetryUpdate.name)
+  return name_.GetNoArena();
+}
+inline void TelemetryUpdate::set_name(const ::std::string& value) {
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Command.TelemetryUpdate.name)
+}
+#if LANG_CXX11
+inline void TelemetryUpdate::set_name(::std::string&& value) {
+  set_has_name();
+  name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Command.TelemetryUpdate.name)
+}
+#endif
+inline void TelemetryUpdate::set_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Command.TelemetryUpdate.name)
+}
+inline void TelemetryUpdate::set_name(const char* value, size_t size) {
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Command.TelemetryUpdate.name)
+}
+inline ::std::string* TelemetryUpdate::mutable_name() {
+  set_has_name();
+  // @@protoc_insertion_point(field_mutable:Command.TelemetryUpdate.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* TelemetryUpdate::release_name() {
+  // @@protoc_insertion_point(field_release:Command.TelemetryUpdate.name)
+  clear_has_name();
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void TelemetryUpdate::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    set_has_name();
+  } else {
+    clear_has_name();
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:Command.TelemetryUpdate.name)
+}
+
+// optional float fvalue = 2;
+inline bool TelemetryUpdate::has_fvalue() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void TelemetryUpdate::set_has_fvalue() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void TelemetryUpdate::clear_has_fvalue() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void TelemetryUpdate::clear_fvalue() {
+  fvalue_ = 0;
+  clear_has_fvalue();
+}
+inline float TelemetryUpdate::fvalue() const {
+  // @@protoc_insertion_point(field_get:Command.TelemetryUpdate.fvalue)
+  return fvalue_;
+}
+inline void TelemetryUpdate::set_fvalue(float value) {
+  set_has_fvalue();
+  fvalue_ = value;
+  // @@protoc_insertion_point(field_set:Command.TelemetryUpdate.fvalue)
+}
+
+// optional string svalue = 3;
+inline bool TelemetryUpdate::has_svalue() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void TelemetryUpdate::set_has_svalue() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void TelemetryUpdate::clear_has_svalue() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void TelemetryUpdate::clear_svalue() {
+  svalue_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_svalue();
+}
+inline const ::std::string& TelemetryUpdate::svalue() const {
+  // @@protoc_insertion_point(field_get:Command.TelemetryUpdate.svalue)
+  return svalue_.GetNoArena();
+}
+inline void TelemetryUpdate::set_svalue(const ::std::string& value) {
+  set_has_svalue();
+  svalue_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Command.TelemetryUpdate.svalue)
+}
+#if LANG_CXX11
+inline void TelemetryUpdate::set_svalue(::std::string&& value) {
+  set_has_svalue();
+  svalue_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Command.TelemetryUpdate.svalue)
+}
+#endif
+inline void TelemetryUpdate::set_svalue(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_svalue();
+  svalue_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Command.TelemetryUpdate.svalue)
+}
+inline void TelemetryUpdate::set_svalue(const char* value, size_t size) {
+  set_has_svalue();
+  svalue_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Command.TelemetryUpdate.svalue)
+}
+inline ::std::string* TelemetryUpdate::mutable_svalue() {
+  set_has_svalue();
+  // @@protoc_insertion_point(field_mutable:Command.TelemetryUpdate.svalue)
+  return svalue_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* TelemetryUpdate::release_svalue() {
+  // @@protoc_insertion_point(field_release:Command.TelemetryUpdate.svalue)
+  clear_has_svalue();
+  return svalue_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void TelemetryUpdate::set_allocated_svalue(::std::string* svalue) {
+  if (svalue != NULL) {
+    set_has_svalue();
+  } else {
+    clear_has_svalue();
+  }
+  svalue_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), svalue);
+  // @@protoc_insertion_point(field_set_allocated:Command.TelemetryUpdate.svalue)
+}
+
+// optional bool bvalue = 4;
+inline bool TelemetryUpdate::has_bvalue() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void TelemetryUpdate::set_has_bvalue() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void TelemetryUpdate::clear_has_bvalue() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void TelemetryUpdate::clear_bvalue() {
+  bvalue_ = false;
+  clear_has_bvalue();
+}
+inline bool TelemetryUpdate::bvalue() const {
+  // @@protoc_insertion_point(field_get:Command.TelemetryUpdate.bvalue)
+  return bvalue_;
+}
+inline void TelemetryUpdate::set_bvalue(bool value) {
+  set_has_bvalue();
+  bvalue_ = value;
+  // @@protoc_insertion_point(field_set:Command.TelemetryUpdate.bvalue)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
