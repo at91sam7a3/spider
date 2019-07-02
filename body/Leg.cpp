@@ -11,10 +11,10 @@ static const double cLegPart=52;
 static const double bLegPart=81;
 static const double aLegPart=124;
 // phisical coordinates where legs attached on body
-static const double centerYOffset=93.5;  //65
-static const double rearYOffset=57.5;
-static const double rearXOffset=99;
-static const double stepHeight = 60;//How far robot raise a leg on step
+static const double centerYOffset=85;  //65
+static const double rearYOffset=50;
+static const double rearXOffset=86.5;
+static const double stepHeight = 80;//How far robot raise a leg on step
 
 Leg::Leg()
     :bodyHeight_(60)
@@ -46,15 +46,15 @@ void Leg::SetLegIndex(int idx)
     if(idx==5) angleCOffsetAccordingToLegAttachment_ = -30;
 
     if((idx==1) || (idx==4))
-            yCenterPos_=160;
+        yCenterPos_=160;
 
     if((idx==0) || (idx==5))
-            xCenterPos_=60;
-            yCenterPos_=100;
+        xCenterPos_=60;
+    yCenterPos_=100;
 
     if((idx==2) || (idx==3))
-            xCenterPos_=-60;
-            yCenterPos_=100;
+        xCenterPos_=-60;
+    yCenterPos_=100;
 
 }
 
@@ -86,10 +86,10 @@ void Leg::RecalcAngles()
     ServoManager::setAngleF(indexes_[0], angleA_);
     ServoManager::setAngleF(indexes_[1],180 -angleB_);
     ServoManager::setAngleF(indexes_[2],angleC_-angleCOffsetAccordingToLegAttachment_);
-   // std::cout<<"LEG "<<legIndex_<<" angles<< A "<<angleA_<<" B "<<angleB_<<" C "<<angleC_<<std::endl;
+    // std::cout<<"LEG "<<legIndex_<<" angles<< A "<<angleA_<<" B "<<angleB_<<" C "<<angleC_<<std::endl;
 }
 
-void Leg::SetXY(double x, double y) //TODO
+void Leg::SetLocalXY(double x, double y) //TODO
 {
     xPos_ = x;
     yPos_ = y;
@@ -104,16 +104,16 @@ void Leg::LegAddOffsetInGlobal(double xoffset, double yoffset)
     xPos_-=xoffset;
     if(legIndex_<3)
     {
-         yPos_+=yoffset;
+        yPos_+=yoffset;
     }
     else {
-         yPos_-=yoffset;
+        yPos_-=yoffset;
     }
 }
 
 void Leg::SetLegCoord(LegCoodinates &lc)
 {
-    SetXY(lc.x,lc.y);
+    SetLocalXY(lc.x,lc.y);
     distanceFromGround_ = lc.height;
     //RecalcAngles();
 }
@@ -136,10 +136,9 @@ std::vector<int> Leg::GetMotorIndexes()
 
 // X axis looks front
 // Y axit looks left
-LegCoodinates Leg::GlobalToLocal(LegCoodinates &lc)
+vec2f Leg::GlobalToLocal(vec2f &lc)
 {
-    LegCoodinates res;
-    res.height = lc.height;
+    vec2f res;
     switch (legIndex_) {
 
     case RightMiddle:
@@ -173,7 +172,7 @@ LegCoodinates Leg::GlobalToLocal(LegCoodinates &lc)
         break;
     }
     return res;
-}
+};
 
 double Leg::GetLegDirectionInGlobalCoordinates()
 {
@@ -263,7 +262,7 @@ void Leg::ProcessLegMovingInAir()
 {
     if(leg_position==moving_up){
         leg_position=moving_to_target;
-        SetXY(newPositionOnGround_.x,newPositionOnGround_.y);
+        SetLocalXY(newPositionOnGround_.x,newPositionOnGround_.y);
         return;
     }
     if(leg_position==moving_to_target){
@@ -275,6 +274,72 @@ void Leg::ProcessLegMovingInAir()
 vec2f Leg::GetCenterVec()
 {
     return vec2f(xCenterPos_,yCenterPos_ );
+}
+
+double Leg::GetLegLocalZAngle()
+{
+    return angleC_;
+}
+
+void Leg::TurnLegWithGlobalCoord(double offset)
+{
+    if(legIndex_ == 0){
+        std::cout<<"Tur leg on "<<offset<<" degrees"<<std::endl;
+           std::cout<<"Leg 0 local pos "<<xPos_<<" , "<<yPos_<<" "<<std::endl;
+    }
+
+    vec2f currentGlobalPos = GetLegGlobalCoord();
+    if(legIndex_ == 0){
+        std::cout<<"Leg 0 global pos "<<currentGlobalPos.x<<" , "<<currentGlobalPos.y<<" "<<std::endl;
+    }
+    currentGlobalPos.rotate(offset);
+    if(legIndex_ == 0){
+        std::cout<<"Leg 0 global pos "<<currentGlobalPos.x<<" , "<<currentGlobalPos.y<<" after rotate "<<std::endl;
+    }
+    vec2f lc = GlobalToLocal(currentGlobalPos);
+    SetLocalXY(lc.x,lc.y);
+    if(legIndex_ == 0){
+           std::cout<<"Leg 0 new local pos "<<xPos_<<" , "<<yPos_<<" "<<std::endl;
+    }
+}
+
+vec2f Leg::GetLegGlobalCoord()
+{
+    vec2f res;
+
+    switch (legIndex_) {
+
+    case RightMiddle:
+        res.x = xPos_;
+        res.y = yPos_+ centerYOffset;
+        break;
+    case LeftMiddle:
+        res.x = xPos_;
+        res.y = -yPos_ - centerYOffset;
+        break;
+
+    case RightFront:
+        res.x = xPos_ + rearXOffset;
+        res.y = yPos_ + rearYOffset;
+        break;
+    case RightBack:
+        res.x = xPos_ - rearXOffset;
+        res.y = yPos_ + rearYOffset;
+        break;
+
+    case LeftFront:
+        res.x = xPos_ + rearXOffset;
+        res.y = -yPos_ - rearYOffset;
+        break;
+    case LeftBack:
+        res.x = xPos_ - rearXOffset;
+        res.y = -yPos_ - rearYOffset;
+        break;
+
+    default:
+        break;
+    }
+    return res;
 }
 
 }

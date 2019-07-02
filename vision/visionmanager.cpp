@@ -2,10 +2,12 @@
 #include <thread>
 #include <zmq.hpp>
 #include "opencv2/imgproc/imgproc.hpp"
-#include <opencv4/opencv2/highgui.hpp>
+#include <opencv2/highgui.hpp>
+#include <librealsense2/rs.hpp>
+
 
 VisionManager::VisionManager()
-    :cap(0)
+
 {
 
 }
@@ -30,37 +32,53 @@ void VisionManager::ProcessCommand(Command::CommandToCamera &toCamera)
 
 void VisionManager::StartCamera()
 {
-    if(!cap.isOpened())  // check if we succeeded
-        return;
     std::cout<<"Done"<<std::endl;
     camera_thread_.reset(new std::thread(&VisionManager::CameraThread,this));
 }
-
-void VisionManager::CameraThread()
+ void VisionManager::CameraThread()
 {
     zmq::context_t context (2);
     zmq::socket_t socket (context, ZMQ_PAIR);
     socket.bind ("tcp://*:5557");
     cv::Size size(640,480);
-    cv::Mat image;
+    //cv::Mat image;
+
+
+    // Declare depth colorizer for pretty visualization of depth data
+    rs2::colorizer color_map;
+
+    // Declare RealSense pipeline, encapsulating the actual device and sensors
+    rs2::pipeline pipe;
+    // Start streaming with default recommended configuration
+    pipe.start();
+
     while(true)
     {
-        cap >> image;
-        cv::cvtColor(image, image, cv::COLOR_RGB2GRAY);
-        cv::flip(image, image, -1);
+        rs2::frameset data = pipe.wait_for_frames(); // Wait for next set of frames from the camera
+        rs2::frame depth = data.get_depth_frame().apply_filter(color_map);
+        rs2::frame picture = data.get_color_frame();
+        // Query frame size (width and height)
+        const int w = depth.as<rs2::video_frame>().get_width();
+        const int h = depth.as<rs2::video_frame>().get_height();
+
+        // Create OpenCV matrix of size (w,h) from the colorized depth data
+        cv::Mat image(cv::Size(w, h), CV_8UC3, const_cast<void*>(depth.get_data()), cv::Mat::AUTO_STEP);
+
+       // cv::cvtColor(image, image, cv::COLOR_RGB2GRAY);
+        //cv::flip(image, image, -1);
         //cv::resize(image,image,size);
         //This is good place to add image preprocessing
 
-        arucoPipeline.ProcessPipeline (image);
+       // arucoPipeline.ProcessPipeline (image);
 
-        cv::putText(image,
+      /*  cv::putText(image,
                     "Here is some text",
                     cv::Point(5,5), // Coordinates
                     cv::FONT_HERSHEY_COMPLEX_SMALL, // Font
                     1.0, // Scale. 2.0 = 2x bigger
                     cv::Scalar(255,255,255), // BGR Color
                     1 // Line Thickness (Optional)
-                    ); // Anti-alias (Optional)
+                    ); // Anti-alias (Optional)*/
         std::vector<uchar> buff;//buffer for coding
         std::vector<int> param(2);
         param[0] = cv::IMWRITE_JPEG_QUALITY;

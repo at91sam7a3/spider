@@ -32,12 +32,18 @@ Server::~Server() {
 
 
 
-void Server::startServer() {
+void Server::startServer(bool travelMode) {
 
     //    mosquitto_thread_.reset(new std::thread(&Server::mosquittoThread,this));
+    if(travelMode){
+        //MoveCommands::GetInstance()->Sleep();
+        std::cout<<"Going to turn off"<<std::endl;
+        platform.Sleep();
+        return;
+    }
     orders_thread_.reset(new std::thread(&Server::ordersThread,this));
     settings_thread_.reset(new std::thread(&Server::settingThread,this));
-    //MoveCommands::GetInstance()->Sleep();
+
 }
 
 
@@ -57,7 +63,6 @@ void Server::settingThread()
         {
         case COMMAND_TO_CAMERA:
         {
-            std::cout << "COMMAND_TO_SERVO" << std::endl;
 
             Command::CommandToCamera  toCamera;
             toCamera.ParseFromArray(static_cast<char*>(rcv_message.data())+1,static_cast<int>(rcv_message.size()-1));
@@ -86,52 +91,27 @@ void Server::ordersThread()
         char commandType = *(static_cast<char*>(request.data()));
         switch(commandType)
         {
-        /*case COMMAND_TO_SERVO:
-        {
-            std::cout << "COMMAND_TO_SERVO" << std::endl;
-
-            Command::CommandToServo  toServo;
-            toServo.ParseFromArray(static_cast<char*>(request.data())+1,static_cast<int>(request.size()-1));
-            std::cout << toServo.name().c_str()<<std::endl;
-            //Command::ResponceFromServo fromServo = ServoManager::processServoCommand(toServo);
-            std::string replyString(fromServo.SerializeAsString());
-            //  Send reply back to client
-            zmq::message_t reply (replyString.length());
-            memcpy (reply.data (), replyString.c_str(), replyString.length());
-            socket.send (reply);
-        }
-            break;*/
         case MOVE_COMMAND:
         {
+            std::cout << "Received move command" << std::endl;
             Command::MoveCommand  mc;
             mc.ParseFromArray(static_cast<char*>(request.data())+1,static_cast<int>(request.size()-1));
             if(mc.has_x())
-                platform.GoToPosition(vec2f(mc.x(),mc.y()));
-
-            if(mc.has_rotation_before())
+            {
+                std::cout << "Received command to move xy" << std::endl;
+                platform.GoToCoordinates(vec2f(mc.x(),mc.y()));
+            }
+            if(mc.has_rotation_before()){
+                std::cout << "Received command to turn a" << std::endl;
                 platform.Turn(mc.rotation_before());
-
+            }
             zmq::message_t reply (1);
             char rep=EMPTY_ANSWER;
             memcpy (reply.data (), &rep, 1);
             socket.send (reply);
         }
             break;
-        /*case LEG_MOVEMENT:
-        {
-            Command::LegMoveCommand lmc;
-            lmc.ParseFromArray(static_cast<char*>(request.data())+1,static_cast<int>(request.size()-1));
-            LegCoodinates lc;
-            lc.height=lmc.z();
-            lc.x = lmc.x();
-            lc.y = lmc.y();
-            Hull::GetInstance()->legs_[lmc.leg()].SetLegCoord(lc);
-            //reply empty answer
-            zmq::message_t reply (1);
-            char rep=EMPTY_ANSWER;
-            memcpy (reply.data (), &rep, 1);
-            socket.send (reply);
-        }*/
+
         default:
 
             break;

@@ -24,7 +24,7 @@ struct vec2f
     {
         double tmpAngle=angle*PI/180.0;
         double tmpx=(cos(tmpAngle)*x)-(sin(tmpAngle)*y);
-        double tmpy=(sin(tmpAngle)*x)-(cos(tmpAngle)*y);
+        double tmpy=(sin(tmpAngle)*x)+(cos(tmpAngle)*y);
         x=tmpx;
         y=tmpy;
     }
@@ -33,6 +33,29 @@ struct vec2f
     }
     vec2f operator*(const double size){
         return vec2f(x*size,y*size);
+    }
+    double size(){
+        return( sqrt((x*x) + (y*y)));
+    }
+
+    static constexpr int radToDeg(float rad) { return rad*(180/M_PI); }
+
+    double vectorAngle() {
+        if (x == 0) // special cases
+            return (y > 0)? 90
+                : (y == 0)? 0
+                : 270;
+        else if (y == 0) // special cases
+            return (x >= 0)? 0
+                : 180;
+        int ret = radToDeg(atanf((float)y/x));
+        if (x < 0 && y < 0) // quadrant Ⅲ
+            ret = 180 + ret;
+        else if (x < 0) // quadrant Ⅱ
+            ret = 180 + ret; // it actually substracts
+        else if (y < 0) // quadrant Ⅳ
+            ret = 270 + (90 + ret); // it actually substracts
+        return ret;
     }
 };
 
@@ -77,7 +100,7 @@ public:
     void SetLegIndex(int idx);
     int GetLegIndex();
     void RecalcAngles();
-    void SetXY(double,double);
+    void SetLocalXY(double,double);
     void LegAddOffsetInGlobal(double,double);
 
     void SetLegCoord(LegCoodinates & lc);
@@ -85,7 +108,7 @@ public:
     //input
     std::vector<int> GetMotorIndexes();
     // convert global coordinates to local for this leg
-    LegCoodinates GlobalToLocal(LegCoodinates &lc);
+    vec2f GlobalToLocal(vec2f &lc);
     // get Leg angle
     double GetLegDirectionInGlobalCoordinates();
     double bodyHeight_;
@@ -102,6 +125,9 @@ public:
     // this is needed only for rotating procesure
     float currentLegrotationOffset_;
     vec2f GetCenterVec();
+    double GetLegLocalZAngle();
+    void TurnLegWithGlobalCoord(double offset);
+    vec2f GetLegGlobalCoord();
 private:
     volatile double xPos_;
     volatile double yPos_;
@@ -120,6 +146,8 @@ private:
     std::vector<int> indexes_;
     int legIndex_;
     float angleCOffsetAccordingToLegAttachment_;
+
+
 
 };
 }

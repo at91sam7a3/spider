@@ -40,7 +40,7 @@ public:
     void Wake();
     //coordinates
     vec2f GetCurrentPosition();
-    void GoToPosition(vec2f);
+    void GoToOffset(vec2f);
     //just movement
     void MoveForward(float distance);
     void Turn(float degrees);
@@ -48,8 +48,9 @@ public:
     void SetBodyHeight(float height);
     float GetBodyHeight();
 
+    void GoToCoordinates(vec2f newCoord);
 private:
-
+    void movingEnd();
     void procedureGo();
     void procedureTurn();
     void prepareToGo();
@@ -68,7 +69,7 @@ private:
     double directionAngle;
     double desiredAngle_;
     ServoManager servoManager_;
-    float LegAngles_tmp[6];
+
 };
 };
 #endif // PLATFORM_H

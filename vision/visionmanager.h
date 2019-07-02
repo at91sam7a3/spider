@@ -16,10 +16,10 @@ public:
 
 private:
 
-    void CameraThread();
+    void CameraThread[[noreturn]]();
     std::shared_ptr<std::thread> camera_thread_;
 
-    cv::VideoCapture cap;
+   // cv::VideoCapture cap;
    // cv::Mat image;
     ArucoPipeline arucoPipeline;
 };

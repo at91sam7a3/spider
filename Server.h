@@ -21,7 +21,7 @@ public:
 	Server();
 	~Server();
 public:
-    void startServer();
+    void startServer(bool travelMode);
 
 private:
     void settingThread();
