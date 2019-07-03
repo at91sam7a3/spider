@@ -22,6 +22,10 @@ private:
    // cv::VideoCapture cap;
    // cv::Mat image;
     ArucoPipeline arucoPipeline;
+    bool cameraStarted_;
+    bool rgbModeCamera_;
+    bool depthModeCamera_;
+    bool arucoProcessing_;
 };
 
 #endif // VISIONMANAGER_H

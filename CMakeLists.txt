@@ -7,6 +7,7 @@ aux_source_directory(. SRC_LIST)
 aux_source_directory(./proto SRC_LIST)
 aux_source_directory(./body SRC_LIST)
 aux_source_directory(./vision SRC_LIST)
+aux_source_directory(./procedures SRC_LIST)
 aux_source_directory(./hardware/lx16lib LX16_SRC_LIST)
 
 include(build/raspberry_crosscompile.cmake)

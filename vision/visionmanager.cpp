@@ -7,7 +7,10 @@
 
 
 VisionManager::VisionManager()
-
+    :cameraStarted_(false)
+    ,rgbModeCamera_(false)
+    ,depthModeCamera_(false)
+    ,arucoProcessing_(false)
 {
 
 }
@@ -45,7 +48,7 @@ void VisionManager::StartCamera()
 
 
     // Declare depth colorizer for pretty visualization of depth data
-    rs2::colorizer color_map;
+    rs2::colorizer color_map(2);
 
     // Declare RealSense pipeline, encapsulating the actual device and sensors
     rs2::pipeline pipe;
@@ -62,7 +65,7 @@ void VisionManager::StartCamera()
         const int h = depth.as<rs2::video_frame>().get_height();
 
         // Create OpenCV matrix of size (w,h) from the colorized depth data
-        cv::Mat image(cv::Size(w, h), CV_8UC3, const_cast<void*>(depth.get_data()), cv::Mat::AUTO_STEP);
+        cv::Mat image(cv::Size(w, h), CV_8UC3, const_cast<void*>(picture.get_data()), cv::Mat::AUTO_STEP);
 
        // cv::cvtColor(image, image, cv::COLOR_RGB2GRAY);
         //cv::flip(image, image, -1);
