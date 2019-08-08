@@ -1,15 +1,19 @@
 #ifndef KEEPDISTANCE_H
 #define KEEPDISTANCE_H
 
-#include "baseprocedure.h"
+#include "basetask.h"
 
 //This procedure try to keep distance to obstacle
 
-class KeepDistance : public BaseProcedure
+class KeepDistance : public BaseTask
 {
 public:
     KeepDistance();
     virtual void execute();
+    virtual void processVideo(rs2::frameset& data);
+
+private:
+    float m_distanceFromObstacle;
 };
 
 #endif // KEEPDISTANCE_H

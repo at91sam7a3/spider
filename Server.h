@@ -12,6 +12,7 @@
 #include <memory>
 #include "platform.h"
 #include "vision/visionmanager.h"
+#include "procedures/tasksmanager.h"
 
 namespace spider {
 
@@ -31,8 +32,8 @@ private:
     std::unique_ptr<std::thread> settings_thread_;
 //    std::shared_ptr<std::thread> mosquitto_thread_;
 
-   VisionManager visionManager_;
    Platform platform;
+   TasksManager taskManager;
 };
 
 } /* namespace spider */

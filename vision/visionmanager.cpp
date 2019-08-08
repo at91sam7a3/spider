@@ -1,18 +1,26 @@
 #include "visionmanager.h"
 #include <thread>
-#include <zmq.hpp>
+
 #include "opencv2/imgproc/imgproc.hpp"
 #include <opencv2/highgui.hpp>
-#include <librealsense2/rs.hpp>
+
 
 
 VisionManager::VisionManager()
-    :cameraStarted_(false)
-    ,rgbModeCamera_(false)
-    ,depthModeCamera_(false)
-    ,arucoProcessing_(false)
+    :arucoPipeline()
+    ,color_map(2)
+    ,pipe()
+    ,data()
+    ,context (2)
+    ,socket (context, ZMQ_PAIR)
 {
+   socket.bind ("tcp://*:5557");
+}
 
+VisionManager *VisionManager::GetInstance()
+{
+    static VisionManager m_singlton;
+    return &m_singlton;
 }
 
 void VisionManager::ProcessCommand(Command::CommandToCamera &toCamera)
@@ -21,6 +29,34 @@ void VisionManager::ProcessCommand(Command::CommandToCamera &toCamera)
     {
         StartCamera();
     }
+}
+
+//get new frames from camera and refresh output image
+void VisionManager::UpdateVideoData()
+{
+    data=pipe.wait_for_frames();
+    rs2::frame picture = data.get_color_frame();
+    const int w = picture.as<rs2::video_frame>().get_width();
+    const int h = picture.as<rs2::video_frame>().get_height();
+    image = cv::Mat(cv::Size(w, h), CV_8UC3, const_cast<void*>(picture.get_data()), cv::Mat::AUTO_STEP);
+}
+
+void VisionManager::SendPictureToGUI()
+{
+    std::vector<uchar> buff;//buffer for coding
+    std::vector<int> param(2);
+    param[0] = cv::IMWRITE_JPEG_QUALITY;
+    param[1] = 95;//default(95) 0-100
+    cv::imencode(".jpg", image, buff, param);
+    zmq::message_t frame ( buff.size());
+    memcpy (frame.data (), &buff[0], buff.size());
+    //And then send to socket
+    socket.send(frame);
+}
+
+cv::Mat *VisionManager::GetOutputImage()
+{
+    return &image;
 }
 
 /**
@@ -36,17 +72,6 @@ void VisionManager::ProcessCommand(Command::CommandToCamera &toCamera)
 void VisionManager::StartCamera()
 {
     std::cout<<"Done"<<std::endl;
-    camera_thread_.reset(new std::thread(&VisionManager::CameraThread,this));
-}
- void VisionManager::CameraThread()
-{
-    zmq::context_t context (2);
-    zmq::socket_t socket (context, ZMQ_PAIR);
-    socket.bind ("tcp://*:5557");
-    cv::Size size(640,480);
-    //cv::Mat image;
-
-
     // Declare depth colorizer for pretty visualization of depth data
     rs2::colorizer color_map(2);
 
@@ -54,6 +79,17 @@ void VisionManager::StartCamera()
     rs2::pipeline pipe;
     // Start streaming with default recommended configuration
     pipe.start();
+}
+ void VisionManager::CameraThread()
+{
+    zmq::context_t context (2);
+    zmq::socket_t socket (context, ZMQ_PAIR);
+    socket.bind ("tcp://*:5557");
+   /*  cv::Size size(640,480);
+    //cv::Mat image;
+
+
+
 
     while(true)
     {
@@ -74,14 +110,14 @@ void VisionManager::StartCamera()
 
        // arucoPipeline.ProcessPipeline (image);
 
-      /*  cv::putText(image,
+       cv::putText(image,
                     "Here is some text",
                     cv::Point(5,5), // Coordinates
                     cv::FONT_HERSHEY_COMPLEX_SMALL, // Font
                     1.0, // Scale. 2.0 = 2x bigger
                     cv::Scalar(255,255,255), // BGR Color
                     1 // Line Thickness (Optional)
-                    ); // Anti-alias (Optional)*/
+                    ); // Anti-alias (Optional)
         std::vector<uchar> buff;//buffer for coding
         std::vector<int> param(2);
         param[0] = cv::IMWRITE_JPEG_QUALITY;
@@ -92,5 +128,5 @@ void VisionManager::StartCamera()
         //And then send to socket
         socket.send(frame);
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    }
+    }*/
 }

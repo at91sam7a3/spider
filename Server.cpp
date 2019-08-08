@@ -64,10 +64,11 @@ void Server::settingThread()
         case COMMAND_TO_CAMERA:
         {
 
-            Command::CommandToCamera  toCamera;
+           /* Command::CommandToCamera  toCamera;
             toCamera.ParseFromArray(static_cast<char*>(rcv_message.data())+1,static_cast<int>(rcv_message.size()-1));
             std::cout << toCamera.command().c_str()<<std::endl;
-            visionManager_.ProcessCommand(toCamera);
+            VisionManager::GetInstance()->ProcessCommand(toCamera);*/
+            taskManager.StartTasksLoop();
 
         }
             break;
