@@ -6,6 +6,11 @@
 
 
 namespace spider {
+
+std::ostream& operator <<(std::ostream& out, const vec2f& vec){
+    out<<"vec2f( "<<vec.x<<" , "<<vec.y<<" ) ";
+    return out;
+}
 //leg parts sizes
 static const double cLegPart=52;
 static const double bLegPart=81;

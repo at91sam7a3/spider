@@ -31,7 +31,7 @@ struct LegStatus{
 class Platform
 {
 public:
-    Platform();
+    static Platform* GetInstance();
     //Immidiate stop
     void Stop();
     //Sit and power-off legs
@@ -47,9 +47,10 @@ public:
 
     void SetBodyHeight(float height);
     float GetBodyHeight();
-
+    MovementState state_;
     void GoToCoordinates(vec2f newCoord);
 private:
+    Platform();
     void movingEnd();
     void procedureGo();
     void procedureTurn();
@@ -58,7 +59,7 @@ private:
     void MovementThread();
     void MovementDelay();
     std::unique_ptr<std::thread> moving_thread_;
-    MovementState state_;
+
     vec2f currentCoordinates;
     int moveSpeed;
     vec2f normalizedMovementVector;

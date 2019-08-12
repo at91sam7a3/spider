@@ -7,14 +7,16 @@
 
 
 VisionManager::VisionManager()
-    :arucoPipeline()
+    :data()
+    ,arucoPipeline()
     ,color_map(2)
     ,pipe()
-    ,data()
+
     ,context (2)
     ,socket (context, ZMQ_PAIR)
 {
    socket.bind ("tcp://*:5557");
+   StartCamera();
 }
 
 VisionManager *VisionManager::GetInstance()
@@ -34,8 +36,11 @@ void VisionManager::ProcessCommand(Command::CommandToCamera &toCamera)
 //get new frames from camera and refresh output image
 void VisionManager::UpdateVideoData()
 {
+    std::cout << "UpdateVideoData" <<std::endl;
     data=pipe.wait_for_frames();
+     std::cout << "got frames" <<std::endl;
     rs2::frame picture = data.get_color_frame();
+      std::cout << "got picture" <<std::endl;
     const int w = picture.as<rs2::video_frame>().get_width();
     const int h = picture.as<rs2::video_frame>().get_height();
     image = cv::Mat(cv::Size(w, h), CV_8UC3, const_cast<void*>(picture.get_data()), cv::Mat::AUTO_STEP);
@@ -73,12 +78,15 @@ void VisionManager::StartCamera()
 {
     std::cout<<"Done"<<std::endl;
     // Declare depth colorizer for pretty visualization of depth data
-    rs2::colorizer color_map(2);
+  //  rs2::colorizer color_map(2);
 
     // Declare RealSense pipeline, encapsulating the actual device and sensors
-    rs2::pipeline pipe;
+  //  rs2::pipeline pipe;
     // Start streaming with default recommended configuration
+    std::cout << "Starting realsense pipeline" <<std::endl;
     pipe.start();
+
+
 }
  void VisionManager::CameraThread()
 {

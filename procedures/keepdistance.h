@@ -13,7 +13,7 @@ public:
     virtual void processVideo(rs2::frameset& data);
 
 private:
-    float m_distanceFromObstacle;
+    double m_distanceFromObstacle;
 };
 
 #endif // KEEPDISTANCE_H

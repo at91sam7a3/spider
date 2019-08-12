@@ -38,9 +38,10 @@ void Server::startServer(bool travelMode) {
     if(travelMode){
         //MoveCommands::GetInstance()->Sleep();
         std::cout<<"Going to turn off"<<std::endl;
-        platform.Sleep();
+        Platform::GetInstance()->Sleep();
         return;
     }
+    taskManager.StartTasksLoop();
     orders_thread_.reset(new std::thread(&Server::ordersThread,this));
     settings_thread_.reset(new std::thread(&Server::settingThread,this));
 
@@ -68,7 +69,7 @@ void Server::settingThread()
             toCamera.ParseFromArray(static_cast<char*>(rcv_message.data())+1,static_cast<int>(rcv_message.size()-1));
             std::cout << toCamera.command().c_str()<<std::endl;
             VisionManager::GetInstance()->ProcessCommand(toCamera);*/
-            taskManager.StartTasksLoop();
+
 
         }
             break;
@@ -100,11 +101,11 @@ void Server::ordersThread()
             if(mc.has_x())
             {
                 std::cout << "Received command to move xy" << std::endl;
-                platform.GoToCoordinates(vec2f(mc.x(),mc.y()));
+                Platform::GetInstance()->GoToCoordinates(vec2f(mc.x(),mc.y()));
             }
             if(mc.has_rotation_before()){
                 std::cout << "Received command to turn a" << std::endl;
-                platform.Turn(mc.rotation_before());
+                Platform::GetInstance()->Turn(mc.rotation_before());
             }
             zmq::message_t reply (1);
             char rep=EMPTY_ANSWER;

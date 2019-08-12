@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace spider
 {
@@ -20,6 +21,10 @@ struct vec2f
     double x;
     double y;
 
+    friend std::ostream& operator <<(std::ostream& out, const vec2f& vec);
+
+
+
     void rotate(double angle)
     {
         double tmpAngle=angle*PI/180.0;
@@ -31,11 +36,28 @@ struct vec2f
     vec2f operator+(const vec2f& sum){
         return vec2f(x+sum.x, y+sum.y);
     }
+    vec2f operator-(const vec2f& sum){
+        return vec2f(x-sum.x, y-sum.y);
+    }
     vec2f operator*(const double size){
         return vec2f(x*size,y*size);
     }
     double size(){
         return( sqrt((x*x) + (y*y)));
+    }
+
+    vec2f& operator +=(const vec2f& rhs)
+    {
+        this->x+=rhs.x;
+        this->y+=rhs.y;
+        return *this;
+    }
+
+    vec2f& operator -=(const vec2f& rhs)
+    {
+        this->x-=rhs.x;
+        this->y-=rhs.y;
+        return *this;
     }
 
     static constexpr int radToDeg(float rad) { return rad*(180/M_PI); }
@@ -58,6 +80,8 @@ struct vec2f
         return ret;
     }
 };
+
+
 
 enum Legs
 {
@@ -89,6 +113,8 @@ struct LegCoodinates
     double y;
     double height;
 };
+
+
 
 
 

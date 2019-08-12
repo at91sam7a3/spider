@@ -32,7 +32,6 @@ private:
     std::unique_ptr<std::thread> settings_thread_;
 //    std::shared_ptr<std::thread> mosquitto_thread_;
 
-   Platform platform;
    TasksManager taskManager;
 };
 

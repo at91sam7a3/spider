@@ -22,7 +22,7 @@ public:
 private:
     VisionManager();
     void StartCamera();
-    void CameraThread[[noreturn]]();
+    void CameraThread();
     std::shared_ptr<std::thread> camera_thread_;
 
     // cv::VideoCapture cap;

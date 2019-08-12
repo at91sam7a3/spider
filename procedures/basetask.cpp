@@ -1,7 +1,7 @@
 #include "basetask.h"
 
 BaseTask::BaseTask()
-    :m_active(false)
+    :m_active(true)
     ,m_priority(0)
     ,m_needVideo(false)
 {

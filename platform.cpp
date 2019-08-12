@@ -10,11 +10,17 @@ namespace spider {
 static const double minimumDistanceStep=10; //TODO requires experiments
 
 const double PI=3.141592654;
-const double  rotateRadius=220;
 
+Platform *Platform::GetInstance()
+{
+    static Platform platform;
+    return &platform;
+}
+
+//place legs in compact position for transportation
 void Platform::Sleep()
 {
-    for(int i=0;i<6;++i)
+    for(unsigned int i=0;i<6;++i)
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(150));
         legs_[i].SetMotorAngle(0,180);
@@ -31,7 +37,7 @@ Platform::Platform()
     :state_(Sleeping)
     ,currentCoordinates(0,0)
     ,moveSpeed(4)
-    ,normalizedMovementVector()
+    ,normalizedMovementVector(0,1)
     ,currentMovementSpeed(4)
     ,distanceLeft_(0.0)
     ,directionAngle(0.0) //lets say we looking at North
@@ -51,11 +57,11 @@ Platform::Platform()
 
 void Platform::GoToOffset(vec2f newCoord)
 {
-    std::cout<<"We at position "<<currentCoordinates.x<<" , "<<currentCoordinates.y<<std::endl;
-    std::cout<<"Starting move to new position "<<newCoord.x<<","<<newCoord.y<<std::endl;
+    std::cout<<"We at position "<<currentCoordinates<<std::endl;
+    std::cout<<"Starting move to new position "<<newCoord<<std::endl;
     vec2f newMove;
-    newMove.x = newCoord.x - currentCoordinates.x;
-    newMove.y = newCoord.y - currentCoordinates.y;
+    newMove = newCoord - currentCoordinates;
+
     distanceLeft_ = sqrt( newMove.x * newMove.x + newMove.y  * newMove.y  );
     if(distanceLeft_<0.001){
         std::cout<<"Moving to current position not allowed, skipping"<<std::endl;
@@ -71,6 +77,15 @@ void Platform::GoToOffset(vec2f newCoord)
     std::cout<<"distance "<<distanceLeft_<<std::endl;
     prepareToGo();
     state_ = MovementState::Going;
+}
+
+void Platform::MoveForward(float distance)
+{
+    vec2f newMove;
+    newMove.x = normalizedMovementVector.x *distance + currentCoordinates.x;
+    newMove.y = normalizedMovementVector.y*distance + currentCoordinates.y;
+
+    GoToCoordinates(newMove);
 }
 
 
