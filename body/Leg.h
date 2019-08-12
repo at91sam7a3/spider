@@ -23,7 +23,7 @@ struct vec2f
 
     friend std::ostream& operator <<(std::ostream& out, const vec2f& vec);
 
-
+    static double getDistance(vec2f first,vec2f second);
 
     void rotate(double angle)
     {

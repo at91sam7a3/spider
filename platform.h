@@ -40,7 +40,6 @@ public:
     void Wake();
     //coordinates
     vec2f GetCurrentPosition();
-    void GoToOffset(vec2f);
     //just movement
     void MoveForward(float distance);
     void Turn(float degrees);
@@ -55,7 +54,6 @@ private:
     void procedureGo();
     void procedureTurn();
     void prepareToGo();
-    void prepareToTurn();
     void MovementThread();
     void MovementDelay();
     std::unique_ptr<std::thread> moving_thread_;

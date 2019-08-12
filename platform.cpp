@@ -49,34 +49,7 @@ Platform::Platform()
         legs_.push_back(leg);
     }
     prepareToGo();
-  //  Sleep();
     moving_thread_.reset(new std::thread(&Platform::MovementThread,this));
-}
-
-
-
-void Platform::GoToOffset(vec2f newCoord)
-{
-    std::cout<<"We at position "<<currentCoordinates<<std::endl;
-    std::cout<<"Starting move to new position "<<newCoord<<std::endl;
-    vec2f newMove;
-    newMove = newCoord - currentCoordinates;
-
-    distanceLeft_ = sqrt( newMove.x * newMove.x + newMove.y  * newMove.y  );
-    if(distanceLeft_<0.001){
-        std::cout<<"Moving to current position not allowed, skipping"<<std::endl;
-        normalizedMovementVector.x=0;
-        normalizedMovementVector.y=0;
-        return;
-    }
-    normalizedMovementVector.x=newMove.x / distanceLeft_;
-    normalizedMovementVector.y=newMove.y / distanceLeft_;
-    normalizedMovementVector.rotate(-directionAngle); //if we look east and have to go north then locally we go west
-    std::cout<<"changing state to going"<<std::endl;
-    std::cout<<"movement vector x,y="<<normalizedMovementVector.x<<" , "<<normalizedMovementVector.y<<std::endl;
-    std::cout<<"distance "<<distanceLeft_<<std::endl;
-    prepareToGo();
-    state_ = MovementState::Going;
 }
 
 void Platform::MoveForward(float distance)
@@ -200,7 +173,6 @@ void Platform::procedureGo()
                 legToRaise=currentLeg.GetLegIndex();
             }
         }
-        // std::cout<<"max dist # "<<legToRaise<<std::endl;
         if(maxDist>=minimumDistanceStep){ //Dont make steps if it not really needed
             std::cout<<"Move up leg # "<<legToRaise<<std::endl;
             if(legToRaise!=-1){ // I think this check not needed, but let it be
@@ -316,34 +288,10 @@ void Platform::prepareToGo()
     }
 }
 
-void Platform::prepareToTurn()
-{
-
-    /* for(size_t leg=0;leg<6;++leg)
-    {
-        double legAngle=legs_[leg].GetLegDirectionInGlobalCoordinates();
-        LegAngles_tmp[leg]=legAngle;
-        LegCoodinates gc(cos( legAngle/180*PI ) *(rotateRadius)
-                         ,-sin( legAngle/180*PI ) *(rotateRadius),0  );
-
-        LegCoodinates lc = legs_[leg].GlobalToLocal(gc);
-        legs_[leg].MoveLegUp();
-        legs_[leg].SetLocalXY(lc.x,lc.y);
-        legs_[leg].RecalcAngles();
-        MovementDelay();
-        legs_[leg].MoveLegDown();
-        legs_[leg].RecalcAngles();
-        MovementDelay();
-    }*/
-}
 
 void Platform::MovementThread()
 {
     std::cout<<"Start moving thread"<<std::endl;
-    // GoToPosition(vec2f(300,300));
-    //  Sleep();
-
-    bool move_in_progress=true;
     do
     {
         //So, here we are
@@ -358,7 +306,7 @@ void Platform::MovementThread()
             break;
         case spider::Going:
             procedureGo();
-             TelemetryManager::GetInstance()->setValue("X Coord",currentCoordinates.x);
+              TelemetryManager::GetInstance()->setValue("X Coord",currentCoordinates.x);
               TelemetryManager::GetInstance()->setValue("Y Coord",currentCoordinates.y);
             break;
         case spider::Rotating:
@@ -372,7 +320,7 @@ void Platform::MovementThread()
         //sleep if nothing to do
         MovementDelay();
     }
-    while(move_in_progress);
+    while(true);
 }
 
 void Platform::MovementDelay()

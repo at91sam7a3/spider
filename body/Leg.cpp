@@ -347,6 +347,11 @@ vec2f Leg::GetLegGlobalCoord()
     return res;
 }
 
+double vec2f::getDistance(vec2f first, vec2f second)
+{
+    return sqrt( first.x * second.x + first.y  * second.y  );
+}
+
 }
 
 
